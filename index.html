@@ -4,13 +4,62 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Emilie &amp; Stig · 21. august 2027</title>
-<meta name="description" content="Emilie og Stig gifter seg 21. august 2027 i Lysgårdsbakkene på Lillehammer.">
+<meta name="description" content="Emilie og Stig gifter seg 21. august 2027 på Telemarkstunet på Lillehammer.">
 <meta name="theme-color" content="#d1d4cd">
 <link rel="preload" href="fonts/GreatVibes-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/CormorantSC-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Strektegnede ikoner (hus, ringer, glass) som brukes flere steder -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ikon-hus" viewBox="0 0 120 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M2 62 H118"/>
+      <path d="M38 62 V22 H82 V62"/><path d="M34 22 L44 8 H76 L86 22"/><path d="M56 8 V4 H62 V8"/>
+      <path d="M12 62 V32 H38"/><path d="M8 32 L16 25 H38"/><path d="M82 32 H108 V62"/><path d="M82 25 H104 L112 32"/>
+      <path d="M45 27 h6 v8 h-6 z M57 27 h6 v8 h-6 z M69 27 h6 v8 h-6 z M45 41 h6 v8 h-6 z M69 41 h6 v8 h-6 z"/>
+      <path d="M17 38 h6 v8 h-6 z M28 38 h6 v8 h-6 z M88 38 h6 v8 h-6 z M99 38 h6 v8 h-6 z"/>
+      <path d="M55 62 V48 H65 V62"/><path d="M60 48 V62"/>
+      <path d="M12 62 q3 -6 7 -2 q3 -5 7 -1 q3 -5 7 0 M86 62 q3 -6 7 -2 q3 -5 7 -1 q3 -5 7 0"/>
+    </g>
+  </symbol>
+  <symbol id="ikon-ringer" viewBox="0 0 60 44">
+    <g fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="21" cy="27" r="14"/><circle cx="21" cy="27" r="11"/>
+      <circle cx="36" cy="27" r="14"/><circle cx="36" cy="27" r="11"/>
+      <path d="M47 11 c-1.5 -2.5 -5.5 -1.5 -4.5 1.5 l4.5 4.5 l4.5 -4.5 c1 -3 -3 -4 -4.5 -1.5 z" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol id="ikon-middag" viewBox="0 0 72 48">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="36" cy="24" r="17"/><circle cx="36" cy="24" r="11"/>
+      <path d="M7 6 V15 Q7 19 10 19 Q13 19 13 15 V6 M10 6 V15 M10 19 V42"/>
+      <path d="M62 42 V6 Q67 12 66 22 L62 24"/>
+    </g>
+  </symbol>
+  <symbol id="ikon-kake" viewBox="0 0 64 48">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="42" rx="28" ry="4"/>
+      <path d="M10 27 L46 15 L54 19 L18 31 Z"/><path d="M18 31 V40 L54 28 V19"/><path d="M10 27 V36 L18 40"/>
+      <path d="M18 35.5 L54 23.5"/><circle cx="42" cy="13" r="3"/><path d="M43 10 Q45 6 48 6"/>
+    </g>
+  </symbol>
+  <symbol id="ikon-natt" viewBox="0 0 60 48">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M38 6 A18 18 0 1 0 54 32 A14 14 0 1 1 38 6 Z"/>
+      <path d="M14 8 V16 M10 12 H18 M20 30 V36 M17 33 H23 M50 6 V10 M48 8 H52"/>
+    </g>
+  </symbol>
+  <symbol id="ikon-glass" viewBox="0 0 60 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="rotate(-16 18 34)"><path d="M11 10 H25 L24 30 Q18 37 12 30 Z"/><path d="M12 22 H24"/><path d="M18 34 V54 M12 54 H24"/></g>
+      <g transform="rotate(16 42 34)"><path d="M35 10 H49 L48 30 Q42 37 36 30 Z"/><path d="M36 22 H48"/><path d="M42 34 V54 M36 54 H48"/></g>
+      <path d="M30 3 V7 M25 4 L27 8 M35 4 L33 8"/>
+    </g>
+  </symbol>
+</svg>
 
 <!-- ============ FORSIDE ============ -->
 <header class="cover" id="top">
@@ -29,7 +78,7 @@
       <img class="seal seal--lg" src="assets/vokssegl.png" alt="">
     </button>
 
-    <p class="cover__hint">Trykk på konvolutten for å åpne</p>
+    <p class="cover__hint">Trykk på konvolutten<br>for å åpne</p>
   </div>
 </header>
 
@@ -39,23 +88,31 @@
 <section class="section section--paper" id="invitasjon">
   <div class="kollasje-wrap">
     <div class="kollasje">
-      <img class="k k-env" src="assets/konvolutt.jpg" alt="">
-      <div class="k k-navn">
-        <p class="k-navn__eyebrow">Vi skal gifte oss</p>
-        <p class="k-navn__script">Emilie &amp; Stig</p>
+      <div class="k k-env" aria-hidden="true">
+        <span class="k-env__lomme"></span>
+        <img src="assets/konvolutt.png" alt="">
       </div>
-      <a class="k k-std" href="#program">
-        <span class="k-std__script">Save the<br>Date</span>
-        <span class="k-std__linje">21. august 2027</span>
-        <span class="k-std__linje">Lysgårdsbakkene</span>
-        <span class="k-std__linje">Lillehammer</span>
+      <div class="k k-navn">
+        <p class="k-navn__hilsen" id="hilsen" hidden></p>
+        <p class="k-navn__script">Emilie &amp; Stig</p>
+        <p class="k-navn__caps">gifter seg</p>
+        <p class="k-navn__tekst">og vil gjerne feire dagen med <span id="gjest">deg</span></p>
+      </div>
+      <a class="k k-std" href="#info">
+        <svg class="ikon ikon--hus" viewBox="0 0 120 64" aria-hidden="true"><use href="#ikon-hus"/></svg>
+        <span class="k-std__sted">Telemarkstunet</span>
+        <span class="k-std__by">Kantvegen 135<br>2618 Lillehammer</span>
+        <svg class="ikon ikon--ringer" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg>
+        <span class="k-std__dato">21. august 2027</span>
+        <span class="k-std__samme">Vielse og fest<br>samme sted</span>
       </a>
-      <img class="k k-blomst" src="assets/blomsterklynge.jpg" alt="">
+      <img class="k k-blomst" src="assets/blomsterklynge.png" alt="">
+      <img class="k k-peon" src="assets/peon-hvit.png" alt="">
       <a class="k k-rsvp" href="#rsvp">
-        <span class="k-rsvp__lead">Vennligst</span>
-        <span class="k-rsvp__word">RSVP</span>
+        <span class="k-rsvp__word">Kommer<br>du?</span>
+        <span class="k-rsvp__frist">Svar innen 1. mai 2027</span>
+        <span class="k-rsvp__knapp">Trykk her</span>
       </a>
-      <img class="k k-segl" src="assets/vokssegl.png" alt="">
       <figure class="k k-polaroid">
         <img src="assets/par-illustrasjon.jpg" alt="Akvarellillustrasjon av Emilie og Stig i bryllupsantrekk">
       </figure>
@@ -66,13 +123,18 @@
     </div>
   </div>
 
-  <div class="wrap intro reveal">
-    <p class="lead">Vi gleder oss til å feire dagen vår sammen med deg – på toppen av Lillehammer, med utsikt over Mjøsa.</p>
-    <p class="countdown" id="countdown" aria-live="polite"></p>
+  <img class="nedtelling__bukett" src="assets/bukett-hvit.jpg" alt="">
+  <div class="nedtelling reveal">
+    <div class="nedtelling__tall" id="countdown">
+      <span class="nedtelling__enhet"><strong id="cd-dager">–</strong><span>Dager</span></span>
+      <span class="nedtelling__kolon" aria-hidden="true">:</span>
+      <span class="nedtelling__enhet"><strong id="cd-timer">–</strong><span>Timer</span></span>
+      <span class="nedtelling__kolon" aria-hidden="true">:</span>
+      <span class="nedtelling__enhet"><strong id="cd-minutter">–</strong><span>Minutter</span></span>
+    </div>
+    <p class="script nedtelling__tekst" id="nedtelling-tekst">igjen til den store dagen</p>
   </div>
 </section>
-
-<div class="divider" role="separator"><svg viewBox="0 0 28 14" aria-hidden="true"><path d="M14 1 L20 7 L14 13 L8 7 Z" fill="none" stroke="currentColor"/></svg></div>
 
 <!-- ============ PROGRAM ============ -->
 <section class="section section--paper" id="program">
@@ -81,11 +143,11 @@
     <p class="note reveal">Foreløpig program – tidene kan endre seg.</p>
 
     <ol class="timeline">
-      <li class="reveal"><span class="time">14.00</span><div><h3>Vielse</h3><p>Seremoni i Lysgårdsbakkene, med hoppbakken i ryggen.</p></div></li>
-      <li class="reveal"><span class="time">15.00</span><div><h3>Bobler og bilder</h3><p>Skål med brudeparet og fotografering.</p></div></li>
-      <li class="reveal"><span class="time">17.30</span><div><h3>Middag</h3><p>Middag, taler og god stemning.</p></div></li>
-      <li class="reveal"><span class="time">21.00</span><div><h3>Kake og første dans</h3><p>Deretter er dansegulvet åpent.</p></div></li>
-      <li class="reveal"><span class="time">01.00</span><div><h3>Takk for i dag</h3><p>Transport tilbake til sentrum.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg><div><h3>Vielse</h3><p><span class="time">kl. 14.00</span> Seremoni på Telemarkstunet. Hele dagen, også festen, er på samme sted.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 64" aria-hidden="true"><use href="#ikon-glass"/></svg><div><h3>Bobler og bilder</h3><p><span class="time">kl. 15.00</span> Skål med brudeparet og fotografering.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 72 48" aria-hidden="true"><use href="#ikon-middag"/></svg><div><h3>Middag</h3><p><span class="time">kl. 17.30</span> Middag, taler og god stemning.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 64 48" aria-hidden="true"><use href="#ikon-kake"/></svg><div><h3>Kake og første dans</h3><p><span class="time">kl. 21.00</span> Deretter er dansegulvet åpent.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 48" aria-hidden="true"><use href="#ikon-natt"/></svg><div><h3>Takk for i dag</h3><p><span class="time">kl. 01.00</span> Transport tilbake til sentrum.</p></div></li>
     </ol>
   </div>
 </section>
@@ -100,14 +162,14 @@
     <div class="info-grid">
       <article class="info reveal">
         <p class="eyebrow">Sted</p>
-        <h3>Lysgårdsbakkene</h3>
-        <p>Hoppanlegget fra OL i 1994, rett over Lillehammer sentrum. Adresse og parkering kommer.</p>
-        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Lysg%C3%A5rdsbakkene+Lillehammer" target="_blank" rel="noopener">Åpne kart</a>
+        <h3>Telemarkstunet</h3>
+        <p>Kantvegen 135, 2618 Lillehammer. Både vielsen og festen er her, så du trenger ikke flytte deg i løpet av dagen. Informasjon om parkering kommer.</p>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Telemarkstunet%2C+Kantvegen+135%2C+2618+Lillehammer" target="_blank" rel="noopener">Åpne kart</a>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Reise</p>
         <h3>Til Lillehammer</h3>
-        <p>Toget fra Oslo S og Gardermoen går rett til Lillehammer. Vi kommer tilbake med informasjon om transport opp til bakken.</p>
+        <p>Toget fra Oslo S og Gardermoen går rett til Lillehammer. Vi kommer tilbake med informasjon om transport til Telemarkstunet.</p>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Overnatting</p>
@@ -137,7 +199,7 @@
 <section class="section section--sage" id="rsvp">
   <div class="wrap narrow">
     <div class="rsvp reveal">
-      <h2 class="heading heading--card"><span class="script heading__script">Vennligst</span><span class="heading__caps">RSVP</span></h2>
+      <h2 class="heading heading--card"><span class="script heading__script">Kommer du?</span><span class="heading__caps">Gi oss beskjed</span></h2>
       <p class="note">Svar innen 1. mai 2027</p>
 
       <form name="rsvp" method="POST" action="/takk.html" data-netlify="true" netlify-honeypot="bot-field" id="rsvp-form" novalidate>
