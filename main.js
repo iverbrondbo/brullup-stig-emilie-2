@@ -2,11 +2,16 @@ const root = document.documentElement;
 root.classList.add('js', 'is-locked');
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T = reduce ? 0 : 1; // alle tider ganges med denne
 const COLORS = ['#f7f3ea', '#fffdf8', '#e9dfd0', '#6b1a2e', '#55161b', '#8fa08b'];
 const rand = (min, max) => min + Math.random() * (max - min);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const wait = (ms) => new Promise((r) => setTimeout(r, ms * T));
 
 const cover = document.querySelector('.cover');
+const env = document.getElementById('envelope');
+const slot = document.getElementById('env-slot');
+const stage = document.getElementById('stage');
 
 // Utbrudd av kronblader fra et punkt på skjermen
 function burst(x, y, amount = 36) {
@@ -29,36 +34,60 @@ function burst(x, y, amount = 36) {
   }
 }
 
-// ---------- Konvolutten: må åpnes for å komme videre ----------
-const env = document.getElementById('envelope');
+const center = (r) => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+
+// ---------- Konvolutten åpnes, flytter seg, og kortene glir ut ----------
 let opened = false;
-env.addEventListener('click', () => {
+env.addEventListener('click', async () => {
   if (opened) return;
   opened = true;
+  window.scrollTo(0, 0);
+
+  // 1. Navn, buketter og hint toner ut – konvolutten åpner seg
+  const start = env.getBoundingClientRect();
   cover.classList.add('is-opening');
   env.classList.add('is-open');
+  env.style.transform = 'none';
+  await wait(1700);
 
-  const t = reduce ? 0 : 1;
-  setTimeout(() => {
-    const r = env.getBoundingClientRect();
-    burst(r.left + r.width / 2, r.top + r.height * 0.3, window.innerWidth < 560 ? 28 : 44);
-  }, 1300 * t);
+  // 2. Konvolutten flyr opp til plassen sin i kollasjen
+  const a = env.getBoundingClientRect();
+  const b = slot.getBoundingClientRect();
+  const s = b.width / a.width;
+  env.style.transformOrigin = '0 0';
+  env.classList.add('is-flying');
+  env.style.transform = `translate(${b.left - a.left}px, ${b.top - a.top}px) scale(${s})`;
+  await wait(1000);
 
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-    root.classList.remove('is-locked');
-    root.classList.add('is-open');
-    cover.classList.add('is-leaving');
-  }, 2100 * t);
+  // 3. Flytt konvolutten inn i kollasjen, så den skalerer med skjermen
+  env.classList.remove('is-flying');
+  env.style.transform = '';
+  env.style.transformOrigin = '';
+  env.classList.add('in-slot');
+  env.tabIndex = -1;
+  env.setAttribute('aria-hidden', 'true');
+  slot.appendChild(env);
 
-  setTimeout(() => {
-    cover.classList.add('is-gone');
-  }, (2100 + 1200) * t + 50);
+  // 4. Kortene glir ut fra konvolutten
+  const from = center(slot.getBoundingClientRect());
+  document.querySelectorAll('.kollasje .k').forEach((k) => {
+    const c = center(k.getBoundingClientRect());
+    k.style.setProperty('--fx', `${from.x - c.x}px`);
+    k.style.setProperty('--fy', `${from.y - c.y}px`);
+  });
+  cover.classList.add('is-collage');
+  burst(from.x, from.y - b.height * 0.4, window.innerWidth < 560 ? 26 : 40);
+  await wait(2000);
+
+  // 5. Ferdig: siden kan blas videre
+  cover.classList.add('is-done');
+  stage.removeAttribute('aria-hidden');
+  root.classList.remove('is-locked');
+  root.classList.add('is-open');
+  showCountdown();
 });
 
 // ---------- Inn-toning når seksjonene kommer til syne ----------
-document.querySelectorAll('.collage .reveal, .intro.reveal').forEach((el) => el.classList.remove('reveal'));
-
 const io = 'IntersectionObserver' in window
   ? new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -76,7 +105,7 @@ document.querySelectorAll('.reveal').forEach((el) => {
   io.observe(el);
 });
 
-// Sjekk på nytt når forsiden er borte (elementer som allerede er synlige)
+// Sjekk på nytt når siden låses opp (elementer som allerede er synlige)
 const recheck = new MutationObserver(() => {
   if (!root.classList.contains('is-open') || !io) return;
   document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => { io.unobserve(el); io.observe(el); });
@@ -84,31 +113,23 @@ const recheck = new MutationObserver(() => {
 });
 recheck.observe(root, { attributes: true, attributeFilter: ['class'] });
 
-// ---------- Personlig invitasjon: ?navn=Kari%20og%20Ola i lenken ----------
-const gjest = (new URLSearchParams(location.search).get('navn') || '').trim().slice(0, 60);
-if (gjest) {
-  const hilsen = document.getElementById('hilsen');
-  hilsen.textContent = `Kjære ${gjest}`;
-  hilsen.hidden = false;
-  // «dere» når lenken gjelder flere personer
-  if (/\s(og)\s|&|,/i.test(gjest)) document.getElementById('gjest').textContent = 'dere';
-}
-
-// ---------- Nedtelling: dager, timer og minutter ----------
+// ---------- Nedtelling som teller opp ----------
 const wedding = new Date('2027-08-21T14:00:00+02:00');
-const cdFelt = {
-  dager: document.getElementById('cd-dager'),
-  timer: document.getElementById('cd-timer'),
-  minutter: document.getElementById('cd-minutter'),
-};
-function updateCountdown() {
-  const ms = Math.max(wedding - new Date(), 0);
-  cdFelt.dager.textContent = Math.floor(ms / 86400000);
-  cdFelt.timer.textContent = String(Math.floor(ms / 3600000) % 24).padStart(2, '0');
-  cdFelt.minutter.textContent = String(Math.floor(ms / 60000) % 60).padStart(2, '0');
+const cd = document.getElementById('countdown');
+const days = Math.ceil((wedding - new Date()) / 86400000);
+function showCountdown() {
+  if (days < 0) return;
+  if (days === 0) { cd.textContent = 'I dag!'; return; }
+  if (days === 1) { cd.textContent = 'I morgen!'; return; }
+  if (reduce) { cd.textContent = `Om ${days} dager`; return; }
+  const t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min((now - t0) / 1600, 1);
+    cd.textContent = `Om ${Math.round(days * (1 - Math.pow(1 - k, 3)))} dager`;
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
-updateCountdown();
-setInterval(updateCountdown, 20000);
 
 // ---------- RSVP-skjema (Netlify Forms) ----------
 const form = document.getElementById('rsvp-form');
@@ -142,7 +163,7 @@ form.addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.textContent = 'Sender …';
   try {
-    const res = await fetch('/', {
+    const res = form.dataset.preview ? { ok: true } : await fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(form)).toString(),

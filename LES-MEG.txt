@@ -12,10 +12,5 @@ RSVP-svarene:
 - Svarene kan lastes ned som CSV (åpnes i Excel).
 - Skjemaet virker bare når siden ligger på Netlify, ikke når du åpner filen lokalt.
 
-Plassholdere som må byttes ut: klokkeslett i programmet,
+Plassholdere som må byttes ut: klokkeslett i programmet, RSVP-frist (1. mai 2027),
 dresscode, overnatting, gaveønsker og kontaktinfo. Alt ligger i index.html.
-
-Personlig invitasjon:
-- Legg ?navn=... bak adressen, så står "Kjære <navn>" øverst på det grønne kortet.
-  Står det "og", "&" eller komma i navnet, blir "deg" automatisk til "dere".
-  Eksempel: https://xxxx.netlify.app/?navn=Kari%20og%20Ola  (%20 = mellomrom)
