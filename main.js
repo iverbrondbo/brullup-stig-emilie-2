@@ -84,26 +84,31 @@ const recheck = new MutationObserver(() => {
 });
 recheck.observe(root, { attributes: true, attributeFilter: ['class'] });
 
-// ---------- Nedtelling som teller opp ----------
-const wedding = new Date('2027-08-21T14:00:00+02:00');
-const cd = document.getElementById('countdown');
-const days = Math.ceil((wedding - new Date()) / 86400000);
-function showCountdown() {
-  if (days < 0) return;
-  if (days === 0) { cd.textContent = 'I dag!'; return; }
-  if (days === 1) { cd.textContent = 'I morgen!'; return; }
-  if (reduce) { cd.textContent = `Om ${days} dager`; return; }
-  const start = performance.now();
-  const dur = 1600;
-  const step = (now) => {
-    const k = Math.min((now - start) / dur, 1);
-    const eased = 1 - Math.pow(1 - k, 3);
-    cd.textContent = `Om ${Math.round(days * eased)} dager`;
-    if (k < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
+// ---------- Personlig invitasjon: ?navn=Kari%20og%20Ola i lenken ----------
+const gjest = (new URLSearchParams(location.search).get('navn') || '').trim().slice(0, 60);
+if (gjest) {
+  const hilsen = document.getElementById('hilsen');
+  hilsen.textContent = `Kjære ${gjest}`;
+  hilsen.hidden = false;
+  // «dere» når lenken gjelder flere personer
+  if (/\s(og)\s|&|,/i.test(gjest)) document.getElementById('gjest').textContent = 'dere';
 }
-env.addEventListener('click', () => setTimeout(showCountdown, reduce ? 0 : 3500), { once: true });
+
+// ---------- Nedtelling: dager, timer og minutter ----------
+const wedding = new Date('2027-08-21T14:00:00+02:00');
+const cdFelt = {
+  dager: document.getElementById('cd-dager'),
+  timer: document.getElementById('cd-timer'),
+  minutter: document.getElementById('cd-minutter'),
+};
+function updateCountdown() {
+  const ms = Math.max(wedding - new Date(), 0);
+  cdFelt.dager.textContent = Math.floor(ms / 86400000);
+  cdFelt.timer.textContent = String(Math.floor(ms / 3600000) % 24).padStart(2, '0');
+  cdFelt.minutter.textContent = String(Math.floor(ms / 60000) % 60).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 20000);
 
 // ---------- RSVP-skjema (Netlify Forms) ----------
 const form = document.getElementById('rsvp-form');
