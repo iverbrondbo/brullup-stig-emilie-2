@@ -9,14 +9,12 @@
 
 :root {
   /* Flater */
-  --sage-cover: #d1d4cd;    /* forsiden i Canva */
-  --sage: #d4d9c6;          /* kortsiden i Canva */
+  --sage: #d1d4cd;          /* målt fra Canva-sidene */
   --paper: #f7f3ea;
-  --raised: #fffdf8;
+  --raised: #fcfaf5;
   --forest: #3f4b38;
-  --envelope: #5d6e55;
+  --envelope: #626552;
   --burgundy: #410013;
-  --calla: #55161b;
   /* Tekst */
   --brown: #4a2c0a;
   --ink: #2b2118;
@@ -27,13 +25,14 @@
   --leaf: #4f6b53;
   --sage-deep: #8fa08b;
   --line: #ddd6c8;
-  --inset: #c9bfa9;
-  --inset-dark: #f7f3ea55;
+  --inset: #4a2c0a59;
+  --inset-dark: #f7f3ea66;
 
   --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px; --space-5: 40px; --space-6: 64px;
   --radius-paper: 2px; --radius-sm: 6px; --radius-pill: 9999px;
-  --shadow-paper: 0 2px 4px #2b21180f, 0 8px 18px -4px #2b211826;
-  --shadow-lifted: 0 4px 8px #2b211814, 0 16px 30px -6px #2b211838;
+  --shadow-paper: 0 1px 2px #2b211814, 0 10px 22px -6px #2b21182e;
+  --shadow-lifted: 0 2px 4px #2b21181a, 0 18px 36px -8px #2b211840;
+  --calla: #4a151b;
   --focus-ring: 0 0 0 3px var(--paper), 0 0 0 6px var(--leaf);
 
   --font-script: "Great Vibes", "Snell Roundhand", cursive;
@@ -50,137 +49,39 @@ a { color: var(--wine); }
 .hidden { display: none; }
 .script { font-family: var(--font-script); font-weight: 400; }
 .eyebrow { font: 600 12px/16px var(--font-caps); letter-spacing: .24em; text-transform: uppercase; }
+
 .wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
 .narrow { width: min(640px, 100% - 32px); }
 
-/* =====================================================
-   FORSIDEN – én scene: konvolutt → kortkollasje
-   ===================================================== */
-.cover { position: relative; overflow: hidden; height: 100svh; min-height: 560px; background: var(--sage-cover); color: var(--brown); display: grid; place-items: center; text-align: center; padding: 0 var(--space-3); transition: background-color 800ms ease-out; }
-.js .cover { position: fixed; inset: 0; z-index: 50; touch-action: none; }
-.js .cover.is-done { position: relative; inset: auto; z-index: auto; touch-action: auto; }
-.cover.is-opening { background-color: var(--sage); }
-.js.is-locked, .js.is-locked body { overflow: hidden; height: 100%; }
-.js.is-locked main, .js.is-locked .footer { visibility: hidden; }
-
+/* ---------- Forside ---------- */
+.cover { position: relative; overflow: hidden; min-height: 100svh; background: var(--sage); color: var(--brown); display: grid; place-items: center; text-align: center; padding: var(--space-6) var(--space-3); }
 .bouquet { position: absolute; pointer-events: none; user-select: none; }
-.bouquet--tr { top: 0; right: 0; height: min(58vh, 520px); width: auto; transform-origin: top right; }
-.bouquet--bl { bottom: 0; left: 0; height: min(42vh, 400px); width: auto; transform-origin: bottom left; }
-
+.bouquet--tr { top: 0; right: 0; height: min(58vh, 520px); width: auto; }
+.bouquet--bl { bottom: 0; left: 0; height: min(42vh, 400px); width: auto; }
 .cover__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-.cover__names { font: 400 clamp(60px, 14vw, 128px)/1 var(--font-script); color: var(--brown); padding: 0 var(--space-3); }
+.cover__names { font: 400 clamp(64px, 14vw, 128px)/1 var(--font-script); color: var(--brown); padding: 0 var(--space-3); }
 .cover__names .amp { font-size: .8em; }
-.cover__title { margin-top: var(--space-3); font: 600 clamp(15px, 2.4vw, 22px)/1.3 var(--font-caps); letter-spacing: .2em; text-transform: uppercase; }
+.cover__title { margin-top: var(--space-3); font: 600 clamp(16px, 2.4vw, 22px)/1.3 var(--font-caps); letter-spacing: .2em; text-transform: uppercase; }
 .cover__hint { margin-top: var(--space-5); font: 600 13px/18px var(--font-caps); letter-spacing: .2em; text-transform: uppercase; max-width: 24em; }
 
-/* Inngang */
-.js .cover__names { animation: write 1800ms cubic-bezier(.5, 0, .2, 1) 300ms both; }
-.js .cover__title { animation: fadeUp 900ms ease-out 1500ms both; }
-.js .env { animation: dropIn 1100ms cubic-bezier(.2, .9, .3, 1.2) 1800ms both, float 4s ease-in-out 3000ms infinite; }
-.js .cover__hint { animation: fadeUp 800ms ease-out 2600ms both, breathe 2.6s ease-in-out 3400ms infinite; }
-.js .bouquet--tr { animation: inTR 1600ms cubic-bezier(.2, .8, .2, 1) both, swayTR 7s ease-in-out 1600ms infinite; }
-.js .bouquet--bl { animation: inBL 1600ms cubic-bezier(.2, .8, .2, 1) 200ms both, swayBL 8s ease-in-out 1800ms infinite; }
-.js .seal { animation: glow 2.4s ease-in-out 3000ms infinite; }
-
-/* Når konvolutten trykkes: alt annet toner ut */
-.cover.is-opening .cover__names,
-.cover.is-opening .cover__title,
-.cover.is-opening .cover__hint,
-.cover.is-opening .bouquet { animation: fadeOut 600ms ease-out forwards !important; pointer-events: none; }
-
-/* ---------- Konvolutten ---------- */
-.env { --flap: color-mix(in srgb, var(--envelope) 92%, #000); container-type: inline-size; position: relative; margin-top: var(--space-5); width: min(320px, 80vw); aspect-ratio: 320 / 210; border: 0; padding: 0; background: none; cursor: pointer; border-radius: var(--radius-paper); filter: drop-shadow(0 8px 14px #2b211829); perspective: 900px; z-index: 2; }
+/* Konvolutt */
+.env { position: relative; margin-top: var(--space-5); width: min(320px, 78vw); aspect-ratio: 320 / 210; border: 0; padding: 0; background: none; cursor: pointer; border-radius: var(--radius-paper); filter: drop-shadow(0 8px 14px #2b211829); perspective: 900px; }
 .env:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
-.env__body { position: absolute; inset: 0; border-radius: var(--radius-paper); background: color-mix(in srgb, var(--envelope) 80%, #000); }
-.env__flap { position: absolute; inset: 0 0 auto 0; height: 62%; background: var(--flap); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 3; }
-.env__card { position: absolute; left: 7%; right: 7%; top: 6%; bottom: 10%; z-index: 1; background: var(--raised); border-radius: var(--radius-paper); color: var(--brown); display: grid; place-items: start center; padding-top: 7cqw; box-shadow: 0 1px 3px #2b21181f; }
-.env__card .script { font-size: 13cqw; line-height: 1.1; white-space: nowrap; }
-.env__pocket { position: absolute; inset: 0; background: var(--envelope); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); z-index: 2; border-radius: var(--radius-paper); }
-.seal { position: absolute; left: 50%; top: 60%; width: 30cqw; transform: translate(-50%, -50%); z-index: 4; filter: drop-shadow(0 3px 4px #3e0a1766); }
+.env__body { position: absolute; inset: 0; border-radius: var(--radius-paper); background: color-mix(in srgb, var(--envelope) 86%, #000); }
+.env__pocket { position: absolute; inset: auto 0 0 0; height: 100%; background: var(--envelope); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); z-index: 2; border-radius: var(--radius-paper); }
+.env__flap { position: absolute; inset: 0 0 auto 0; height: 62%; background: color-mix(in srgb, var(--envelope) 92%, #000); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 3; transition: transform 800ms ease-in-out, z-index 0s 400ms; }
+.env__card { position: absolute; left: 8%; right: 8%; top: 8%; bottom: 8%; z-index: 1; background: var(--paper); border-radius: var(--radius-paper); color: var(--brown); display: grid; place-items: start center; padding-top: 10%; transition: transform 800ms ease-in-out 250ms; }
+.env__card .script { font-size: clamp(32px, 8vw, 40px); line-height: 1.1; }
+.seal { position: absolute; left: 50%; top: 62%; width: 96px; height: 96px; transform: translate(-50%, -50%); z-index: 4; filter: drop-shadow(0 3px 4px #3e0a1766); transition: opacity 300ms ease-out; }
+.env:hover .seal { transform: translate(-50%, -50%) scale(1.04); transition: transform 250ms ease-out; }
+.env.is-open .env__flap { transform: rotateX(180deg); z-index: 0; }
+.env.is-open .env__card { transform: translateY(-62%); }
+.env.is-open .seal { opacity: 0; }
 
-.env.is-open { animation: none !important; cursor: default; }
-.env.is-open .seal { animation: none; }
-.env.is-open .env__flap { animation: flapOpen 900ms ease-in-out 250ms forwards; }
-.env.is-open .env__card { animation: cardUp 900ms cubic-bezier(.2, .8, .2, 1) 950ms forwards; }
-.env.is-flying { transition: transform 1000ms cubic-bezier(.65, 0, .25, 1); }
-.env.in-slot { position: absolute; inset: 0; width: 100%; margin: 0; transform: none; transition: none; }
-.env.in-slot .env__flap { animation: none; transform: rotateX(180deg); z-index: 0; background: url("assets/konvolutt-for.jpg") center / cover; }
-.env.in-slot .env__card { animation: none; transform: translateY(-38%); }
-
-@keyframes flapOpen {
-  0%    { transform: rotateX(0); background: var(--flap); z-index: 3; }
-  49.9% { background: var(--flap); z-index: 3; }
-  50%   { background: url("assets/konvolutt-for.jpg") center / cover; z-index: 0; }
-  100%  { transform: rotateX(180deg); background: url("assets/konvolutt-for.jpg") center / cover; z-index: 0; }
-}
-@keyframes cardUp { to { transform: translateY(-38%); } }
-
-/* ---------- Kollasjen ---------- */
-/* 1 enhet (--u) = 1 px i et 620 px bredt Canva-utsnitt. Alt skalerer med skjermen. */
-.stage { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 1; }
-.kollasje { --w: min(560px, 100vw, calc((100svh - 110px) * 620 / 820)); --u: calc(var(--w) / 620); position: relative; width: var(--w); height: calc(820 * var(--u)); text-align: center; }
-.cover.is-done .stage { pointer-events: auto; }
-
-.k, .k-slot { position: absolute; margin: 0; }
-.k-slot       { left: calc(165 * var(--u)); top: calc(140 * var(--u)); width: calc(290 * var(--u)); height: calc(190 * var(--u)); z-index: 1; }
-.k-blomst-env { left: calc(456 * var(--u)); top: calc(92 * var(--u));  width: calc(93 * var(--u));  z-index: 2; }
-.k-navn       { left: calc(40 * var(--u));  top: calc(290 * var(--u)); width: calc(300 * var(--u)); height: calc(215 * var(--u)); z-index: 3; rotate: -.6deg; }
-.k-std        { left: calc(364 * var(--u)); top: calc(262 * var(--u)); width: calc(198 * var(--u)); height: calc(265 * var(--u)); z-index: 2; rotate: 4deg; }
-.k-blomst     { left: calc(252 * var(--u)); top: calc(566 * var(--u)); width: calc(93 * var(--u));  z-index: 2; }
-.k-rsvp       { left: calc(106 * var(--u)); top: calc(560 * var(--u)); width: calc(150 * var(--u)); height: calc(178 * var(--u)); z-index: 3; rotate: -4deg; }
-.k-segl       { left: calc(64 * var(--u));  top: calc(524 * var(--u)); width: calc(66 * var(--u));  z-index: 5; rotate: -12deg; filter: drop-shadow(0 3px 4px #3e0a1766); }
-.k-polaroid   { left: calc(345 * var(--u)); top: calc(553 * var(--u)); width: calc(172 * var(--u)); z-index: 4; rotate: 4deg; }
-.k-disk       { left: calc(258 * var(--u)); top: calc(700 * var(--u)); width: calc(104 * var(--u)); height: calc(104 * var(--u)); z-index: 6; }
-
-.k-navn, .k-std, .k-rsvp { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); text-decoration: none; }
-.k-navn::before, .k-std::before, .k-rsvp::before { content: ""; position: absolute; inset: calc(8 * var(--u)); border: 1px solid var(--inset); pointer-events: none; }
-.k-navn { background: var(--forest); color: var(--on-dark); }
-.k-navn::before { border-color: var(--inset-dark); }
-.k-navn__eyebrow { font: 600 max(10px, calc(13 * var(--u)))/1.2 var(--font-caps); letter-spacing: .2em; text-transform: uppercase; }
-.k-navn__script { font: 400 calc(52 * var(--u))/1.1 var(--font-script); margin-top: calc(14 * var(--u)); white-space: nowrap; }
-.k-std, .k-rsvp { background: var(--raised); color: var(--brown); }
-.k-std { justify-content: flex-start; padding: calc(38 * var(--u)) calc(22 * var(--u)) 0; gap: calc(9 * var(--u)); }
-.k-std__script { font: 400 calc(40 * var(--u))/1.05 var(--font-script); margin-bottom: calc(12 * var(--u)); }
-.k-std__linje { align-self: stretch; font: 600 max(9px, calc(12 * var(--u)))/1.6 var(--font-caps); letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid #4a2c0a59; }
-.k-rsvp__lead { font: 400 calc(28 * var(--u))/1 var(--font-script); }
-.k-rsvp__word { font: 600 calc(40 * var(--u))/1.2 var(--font-caps); letter-spacing: .1em; text-transform: uppercase; }
-.k-polaroid { padding: calc(10 * var(--u)) calc(10 * var(--u)) calc(34 * var(--u)); background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
-.k-polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
-.k-disk { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--calla); color: var(--on-dark); text-decoration: none; box-shadow: var(--shadow-paper); }
-.k-disk__caps { font: 600 max(8px, calc(11 * var(--u)))/1.2 var(--font-caps); letter-spacing: .18em; text-transform: uppercase; }
-.k-disk__script { font: 400 calc(28 * var(--u))/1.1 var(--font-script); }
-
-a.k { transition: transform 250ms ease-out, box-shadow 250ms ease-out, background-color 250ms ease-out; }
-a.k:hover { transform: translateY(-4px); box-shadow: var(--shadow-lifted); }
-.k-disk:hover { background: var(--wine); }
-a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
-
-/* Kortene glir ut av konvolutten */
-.js .k { opacity: 0; }
-.cover.is-collage .k { animation: kUt 1000ms cubic-bezier(.2, .8, .2, 1) both; }
-.cover.is-collage .k-blomst-env { animation-name: fadeIn; animation-delay: 0ms; }
-.cover.is-collage .k-navn       { animation-delay: 150ms; }
-.cover.is-collage .k-std        { animation-delay: 300ms; }
-.cover.is-collage .k-rsvp       { animation-delay: 500ms; }
-.cover.is-collage .k-polaroid   { animation-delay: 650ms; }
-.cover.is-collage .k-blomst     { animation-name: fadeIn; animation-delay: 900ms; }
-.cover.is-collage .k-segl       { animation: stempel 700ms cubic-bezier(.3, 1.4, .5, 1) 1000ms both; }
-.cover.is-collage .k-disk       { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1200ms both; }
-.js .k-polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
-.cover.is-collage .k-polaroid img { animation: develop 1200ms ease-out 1100ms forwards; }
-
-/* «Bla ned» når alt er på plass */
-.scroll-hint { position: absolute; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font: 600 12px/16px var(--font-caps); letter-spacing: .24em; text-transform: uppercase; color: var(--brown); text-decoration: none; opacity: 0; pointer-events: none; }
-.scroll-hint__pil { width: 10px; height: 10px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; rotate: 45deg; }
-.cover.is-done .scroll-hint { opacity: 1; pointer-events: auto; transition: opacity 600ms ease-out; animation: bob 2s ease-in-out infinite; }
-
-/* =====================================================
-   RESTEN AV SIDEN
-   ===================================================== */
+/* ---------- Seksjoner ---------- */
 .section { padding: var(--space-6) 0; }
 .section--paper { background: var(--paper); }
 .section--sage { background: var(--sage); padding: var(--space-6) 0 calc(var(--space-6) + 24px); }
-#invitasjon { padding: var(--space-5) 0 var(--space-6); }
 
 .heading { display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--brown); margin-bottom: var(--space-3); }
 .heading__script { font-size: clamp(48px, 9vw, 64px); line-height: 1; }
@@ -191,29 +92,44 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: currentColor; }
 .divider svg { width: 28px; height: 14px; flex: none; }
 
+/* ---------- Kollasje / Save the Date ---------- */
+.collage { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-4); padding: var(--space-3) 0 var(--space-5); }
+.card { position: relative; width: 260px; padding: var(--space-5) var(--space-4); background: var(--raised); color: var(--brown); text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
+.card::before { content: ""; position: absolute; inset: var(--space-2); border: 1px solid var(--inset); pointer-events: none; }
+.card--forest { background: var(--forest); color: var(--on-dark); }
+.card--forest::before { border-color: var(--inset-dark); }
+.card__script { font: 400 46px/1.1 var(--font-script); margin: var(--space-2) 0; }
+.card__caps { font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; margin-top: var(--space-3); }
+.card__line { font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); margin-top: var(--space-2); }
+.tilt-left { rotate: -3deg; }
+.tilt-slight { rotate: -1deg; }
+.tilt-right { rotate: 3deg; }
+
+.polaroid { width: 220px; padding: 12px 12px 48px; background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); position: relative; }
+.polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+.polaroid figcaption { position: absolute; inset: auto 0 8px; text-align: center; font: 400 28px/30px var(--font-script); color: var(--brown); }
+
 .intro { text-align: center; max-width: 34em; }
 .lead { font-size: 22px; line-height: 32px; }
-.countdown { margin-top: var(--space-3); font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--wine); min-height: 20px; }
 
-/* Program */
+/* ---------- Program ---------- */
 .timeline { list-style: none; margin: 0; padding: 0; }
-.timeline li { position: relative; display: grid; grid-template-columns: 76px 1fr; gap: var(--space-3); padding: var(--space-4) 0; }
-.timeline li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); transform-origin: left; }
+.timeline li { display: grid; grid-template-columns: 60px 1fr; align-items: center; gap: var(--space-4); padding: var(--space-4) 0; border-top: 1px solid var(--line); }
 .timeline li:last-child { border-bottom: 1px solid var(--line); }
-.time { display: inline-block; font: 600 18px/29px var(--font-caps); letter-spacing: .1em; color: var(--wine); }
+.time { font: 600 16px/29px var(--font-caps); letter-spacing: .1em; color: var(--wine); margin-right: 4px; }
+.timeline__ikon { width: 100%; height: auto; max-height: 52px; }
 .timeline h3 { font: 600 17px/29px var(--font-caps); letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
+.timeline p { color: var(--ink); }
 
-/* Praktisk info */
+/* ---------- Praktisk info ---------- */
 .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
-.info { position: relative; background: var(--raised); border-top: 10px solid var(--leaf); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: var(--space-4) var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); transition: box-shadow 250ms ease-out; }
-.info:hover { box-shadow: var(--shadow-lifted); }
+.info { position: relative; background: var(--raised); border-top: 10px solid var(--leaf); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: var(--space-4) var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
 .info .eyebrow { color: var(--leaf); }
 .info h3 { font: 600 20px/28px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
 .info .btn { align-self: flex-start; margin-top: var(--space-2); }
 
-/* Knapper */
-.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border-radius: var(--radius-pill); border: 1.5px solid var(--wine); background: transparent; color: var(--wine); font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out, transform 200ms ease-out; }
-.btn:active { transform: scale(.96); }
+/* ---------- Knapper ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border-radius: var(--radius-pill); border: 1.5px solid var(--wine); background: transparent; color: var(--wine); font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out; }
 .btn--primary { background: var(--burgundy); border-color: var(--burgundy); color: var(--on-dark); }
 .btn--primary:hover { background: var(--wine); border-color: var(--wine); }
 .btn--secondary:hover { background: var(--burgundy); border-color: var(--burgundy); color: var(--on-dark); }
@@ -222,12 +138,13 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 .btn:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 .btn[disabled] { opacity: .6; pointer-events: none; }
 
-/* RSVP */
+/* ---------- RSVP ---------- */
 .rsvp { position: relative; background: var(--paper); border-left: 14px solid var(--burgundy); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: var(--space-5) clamp(20px, 6vw, 56px); }
 .rsvp::before { content: ""; position: absolute; inset: var(--space-2); border: 1px solid var(--inset); pointer-events: none; }
 .rsvp form, .rsvp .thanks { position: relative; }
 .heading--card .heading__script { font-size: clamp(40px, 8vw, 52px); }
 .heading--card .heading__caps { font-size: 30px; line-height: 36px; color: var(--brown); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+
 .field { display: flex; flex-direction: column; gap: var(--space-2); margin: 0 0 var(--space-4); padding: 0; border: 0; min-width: 0; }
 .label { font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0; }
 .input { font: inherit; font-size: 19px; line-height: 27px; min-height: 48px; width: 100%; padding: 10px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--raised); color: var(--ink); }
@@ -239,46 +156,71 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .hint { font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); }
 .error { font-style: italic; font-size: 15px; line-height: 22px; color: var(--wine); }
 .form-error { margin-top: var(--space-3); text-align: center; }
+
 .choice { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); align-items: center; }
 .choice__opt { position: relative; }
 .choice__opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .choice__opt input:focus-visible + .btn { box-shadow: var(--focus-ring); }
 .choice__opt input:checked + .btn--secondary { background: var(--forest); border-color: var(--forest); color: var(--on-dark); }
 .choice__opt input:checked + .btn--ghost { color: var(--wine); text-decoration-thickness: 2px; }
+
+.if-yes { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 250ms ease-out, opacity 250ms ease-out; }
+.if-yes > * { min-height: 0; }
 .if-yes.is-hidden { display: none; }
+
 .thanks { text-align: center; padding: var(--space-4) 0; color: var(--brown); }
 .thanks__script { font-size: 56px; line-height: 64px; margin-bottom: var(--space-2); }
-.thanks:not([hidden]) .thanks__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) both; }
-.thanks:not([hidden]) p:last-child { animation: fadeUp 800ms ease-out 900ms both; }
 
-/* Bunn */
+/* ---------- Bunn ---------- */
 .footer { background: var(--forest); color: var(--on-dark); text-align: center; padding: var(--space-5) var(--space-3) calc(var(--space-5) + env(safe-area-inset-bottom)); }
 .footer__names { font: 400 44px/1.1 var(--font-script); }
 .footer__date { margin-top: var(--space-2); font: 600 14px/20px var(--font-caps); letter-spacing: .3em; }
 
-/* ---------- Inn-toning nedover siden ---------- */
+/* ---------- Inn-toning ---------- */
 .js .reveal { opacity: 0; translate: 0 16px; transition: opacity 600ms ease-out, translate 600ms ease-out; }
 .js .reveal.is-visible { opacity: 1; translate: 0 0; }
-.js .heading__script { clip-path: inset(-20% 100% -20% 0); }
-.heading.is-visible .heading__script, .is-visible .heading .heading__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) 150ms forwards; }
-.js .timeline li.reveal { translate: -40px 0; }
-.js .timeline li.reveal::before { transform: scaleX(0); transition: transform 900ms ease-out 200ms; }
-.js .timeline li.is-visible { translate: 0 0; }
-.js .timeline li.is-visible::before { transform: scaleX(1); }
-.timeline li.is-visible .time { animation: popp 600ms cubic-bezier(.3, 1.6, .5, 1) 300ms both; }
-.js .info.reveal { transform: perspective(900px) rotateX(-35deg); transform-origin: top center; transition: opacity 700ms ease-out, translate 700ms ease-out, transform 900ms cubic-bezier(.2, .8, .2, 1), box-shadow 250ms ease-out; }
-.js .info.reveal.is-visible { transform: none; }
-.js .rsvp.reveal { translate: 0 80px; rotate: -2deg; transition: opacity 900ms ease-out, translate 900ms cubic-bezier(.2, .8, .2, 1), rotate 900ms cubic-bezier(.2, .8, .2, 1); }
-.js .rsvp.reveal.is-visible { translate: 0 0; rotate: 0deg; }
 
-/* Utbrudd av kronblader */
-.burst { position: fixed; z-index: 60; left: var(--ox); top: var(--oy); width: var(--s); height: calc(var(--s) * 1.3); border-radius: 60% 0 60% 0; background: var(--c); pointer-events: none; animation: burst var(--d) cubic-bezier(.1, .7, .3, 1) forwards; }
+@media (max-width: 560px) {
+  body { font-size: 18px; line-height: 28px; }
+  .bouquet--tr { height: 34vh; }
+  .bouquet--bl { height: 26vh; }
+  .cover { padding-top: 22vh; padding-bottom: 18vh; place-items: start center; }
+  .collage { gap: var(--space-5); }
+  .timeline li { grid-template-columns: 56px 1fr; gap: var(--space-3); }
+}
 
-/* ---------- Keyframes ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .env__flap, .env__card, .btn, .seal { transition: none !important; }
+  .js .reveal { translate: none; transition: opacity 400ms ease-out; }
+}
+
+/* =====================================================
+   V2 – ANIMASJONER, LÅST FORSIDE OG MOBIL
+   ===================================================== */
+
+/* ---------- Låst forside: man må åpne konvolutten ---------- */
+.js .cover { position: fixed; inset: 0; z-index: 50; height: 100svh; min-height: 0; padding: 0 var(--space-3); place-items: center; touch-action: none; }
+.js.is-locked, .js.is-locked body { overflow: hidden; height: 100%; }
+.js.is-locked main, .js.is-locked .footer { visibility: hidden; }
+.cover.is-leaving { animation: coverOut 1200ms cubic-bezier(.7, 0, .2, 1) forwards; pointer-events: none; }
+.cover.is-gone { display: none; }
+@keyframes coverOut {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-105%); opacity: .6; }
+}
+
+/* ---------- Forsiden kommer inn ---------- */
+.js .cover__names { animation: write 1800ms cubic-bezier(.5, 0, .2, 1) 300ms both; }
+.js .cover__title { animation: fadeUp 900ms ease-out 1500ms both; }
+.js .env { animation: dropIn 1100ms cubic-bezier(.2, .9, .3, 1.2) 1800ms both, float 4s ease-in-out 3000ms infinite; }
+.js .cover__hint { animation: fadeUp 800ms ease-out 2600ms both, breathe 2.6s ease-in-out 3400ms infinite; }
+.js .bouquet--tr { transform-origin: top right; animation: inTR 1600ms cubic-bezier(.2, .8, .2, 1) both, swayTR 7s ease-in-out 1600ms infinite; }
+.js .bouquet--bl { transform-origin: bottom left; animation: inBL 1600ms cubic-bezier(.2, .8, .2, 1) 200ms both, swayBL 8s ease-in-out 1800ms infinite; }
+.js .seal { animation: glow 2.4s ease-in-out 3000ms infinite; }
+
 @keyframes write   { from { clip-path: inset(-20% 100% -20% 0); filter: blur(3px); } to { clip-path: inset(-20% 0 -20% 0); filter: blur(0); } }
 @keyframes fadeUp  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-@keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeOut { to { opacity: 0; } }
 @keyframes dropIn  { from { opacity: 0; transform: translateY(-60px) rotate(-8deg) scale(.9); } to { opacity: 1; transform: none; } }
 @keyframes float   { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-8px) rotate(-.6deg); } }
 @keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
@@ -287,25 +229,91 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 @keyframes swayTR  { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-1.6deg); } }
 @keyframes swayBL  { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(1.4deg); } }
 @keyframes glow    { 0%, 100% { filter: drop-shadow(0 3px 4px #3e0a1766); } 50% { filter: drop-shadow(0 0 14px #55161b99); } }
-@keyframes kUt     { from { opacity: 0; translate: var(--fx, 0) var(--fy, 0); scale: .35; } to { opacity: 1; translate: 0 0; scale: 1; } }
-@keyframes stempel { 0% { opacity: 0; scale: 2.4; } 70% { opacity: 1; scale: .9; } 100% { opacity: 1; scale: 1; } }
-@keyframes popp    { from { opacity: 0; scale: 0; } to { opacity: 1; scale: 1; } }
-@keyframes develop { to { filter: sepia(0) brightness(1) blur(0); } }
-@keyframes bob     { 0%, 100% { translate: -50% 0; } 50% { translate: -50% 6px; } }
+
+/* ---------- Kronblader som daler ---------- */
+.petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.petal { position: absolute; top: -40px; left: var(--x); width: var(--s); height: calc(var(--s) * 1.3); border-radius: 60% 0 60% 0; background: var(--c); opacity: .85; animation: fall var(--d) linear var(--delay) infinite; }
+@keyframes fall {
+  0%   { transform: translate(0, 0) rotate(0); }
+  50%  { transform: translate(var(--drift), 55svh) rotate(200deg); }
+  100% { transform: translate(calc(var(--drift) * -.5), 110svh) rotate(420deg); }
+}
+
+/* Utbrudd av kronblader når konvolutten åpnes og når RSVP sendes */
+.burst { position: fixed; z-index: 60; left: var(--ox); top: var(--oy); width: var(--s); height: calc(var(--s) * 1.3); border-radius: 60% 0 60% 0; background: var(--c); pointer-events: none; animation: burst var(--d) cubic-bezier(.1, .7, .3, 1) forwards; }
 @keyframes burst {
   0%   { transform: translate(-50%, -50%) scale(.3) rotate(0); opacity: 1; }
   100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--r)); opacity: 0; }
 }
 
-/* ---------- Mobil ---------- */
+/* ---------- Konvolutten åpnes ---------- */
+.env.is-open { animation: none; }
+.env.is-open .seal { animation: sealPop 600ms cubic-bezier(.3, 0, .6, 1) forwards; transition: none; }
+.env.is-open .env__flap { transition-delay: 450ms; }
+.env.is-open .env__card { transform: translateY(-78%) scale(1.06); transition: transform 900ms cubic-bezier(.2, .8, .2, 1) 1000ms; }
+@keyframes sealPop {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  35%  { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+  100% { transform: translate(-50%, 40%) scale(.4) rotate(-50deg); opacity: 0; }
+}
+.cover.is-opening .cover__hint { animation: none; opacity: 0; transition: opacity 300ms; }
+
+/* ---------- Innholdet etter åpning ---------- */
+.js .collage > * { opacity: 0; }
+.is-open .collage > * { animation: cardIn 1100ms cubic-bezier(.2, .8, .2, 1) both; }
+.is-open .collage > :nth-child(1) { animation-delay: 700ms; }
+.is-open .collage > :nth-child(2) { animation-delay: 900ms; }
+.is-open .collage > :nth-child(3) { animation-delay: 1100ms; }
+@keyframes cardIn { from { opacity: 0; translate: 0 160px; scale: .85; } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+.js .polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
+.is-open .polaroid img { animation: develop 1200ms ease-out 800ms forwards; }
+@keyframes develop { to { filter: sepia(0) brightness(1) blur(0); } }
+
+.js .intro { opacity: 0; }
+.is-open .intro { animation: fadeUp 900ms ease-out 1600ms both; }
+
+/* Overskrifter skrives fram */
+.js .heading__script { clip-path: inset(-20% 100% -20% 0); }
+.heading.is-visible .heading__script, .is-visible .heading .heading__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) 150ms forwards; }
+
+/* Programmet glir inn fra siden, linjene tegnes */
+.js .timeline li.reveal { translate: -40px 0; border-top-color: transparent; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--line); transform: scaleX(0); transform-origin: left; transition: transform 900ms ease-out 200ms; }
+.js .timeline li.is-visible { translate: 0 0; }
+.timeline li.is-visible::before { transform: scaleX(1); }
+.timeline .time { display: inline-block; }
+.timeline li.is-visible .time { animation: pop 600ms cubic-bezier(.3, 1.6, .5, 1) 300ms both; }
+@keyframes pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+
+/* Infokortene vippes opp */
+.js .info.reveal { transform: perspective(900px) rotateX(-35deg); transform-origin: top center; transition: opacity 700ms ease-out, translate 700ms ease-out, transform 900ms cubic-bezier(.2, .8, .2, 1), box-shadow 250ms ease-out; }
+.js .info.reveal.is-visible { transform: none; }
+.info:hover { box-shadow: var(--shadow-lifted); }
+
+/* RSVP-kortet glir inn som et brev */
+.js .rsvp.reveal { translate: 0 80px; rotate: -2deg; transition: opacity 900ms ease-out, translate 900ms cubic-bezier(.2, .8, .2, 1), rotate 900ms cubic-bezier(.2, .8, .2, 1); }
+.js .rsvp.reveal.is-visible { translate: 0 0; rotate: 0deg; }
+.thanks:not([hidden]) .thanks__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) both; }
+.thanks:not([hidden]) p:last-child { animation: fadeUp 800ms ease-out 900ms both; }
+
+/* Knappene får litt liv */
+.btn { transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out, transform 200ms ease-out; }
+.btn:active { transform: scale(.96); }
+
+/* ---------- Mobil først ---------- */
 @media (max-width: 560px) {
-  body { font-size: 18px; line-height: 28px; }
+  .js .cover { place-items: center; padding: 0 var(--space-3); }
+  .cover__inner { padding-top: 6svh; }
+  .cover__names { font-size: clamp(58px, 17vw, 76px); }
+  .env { width: min(340px, 84vw); }
   .bouquet--tr { height: 30svh; }
   .bouquet--bl { height: 24svh; }
-  .cover__inner { padding-top: 4svh; }
-  .env { width: min(340px, 84vw); }
   .section { padding: 48px 0; }
-  .timeline li { grid-template-columns: 64px 1fr; }
+  .collage { flex-direction: column; gap: var(--space-4); }
+  .collage .card, .collage .polaroid { width: min(280px, 80vw); }
+  .collage > :nth-child(2) { margin-top: -28px; }
+  .collage > :nth-child(3) { margin-top: -20px; }
   .info-grid { gap: var(--space-3); }
   .rsvp { border-left-width: 8px; }
   .choice { flex-direction: column; align-items: stretch; }
@@ -314,7 +322,149 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 
 /* ---------- Redusert bevegelse ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; transition-delay: 0ms !important; }
-  .burst { display: none; }
+  .js .cover__names, .js .cover__title, .js .env, .js .cover__hint, .js .bouquet--tr, .js .bouquet--bl, .js .seal,
+  .is-open .collage > *, .is-open .polaroid img, .heading .heading__script, .timeline .time { animation: none !important; opacity: 1; clip-path: none; filter: none; }
+  .petals, .burst { display: none; }
+  .cover.is-leaving { animation: fadeOut 500ms forwards; }
+  @keyframes fadeOut { to { opacity: 0; } }
+  .js .info.reveal, .js .rsvp.reveal, .js .timeline li.reveal { transform: none; translate: none; rotate: none; }
 }
+
+/* =====================================================
+   V3 – KORTKOLLASJE SOM I CANVA
+   ===================================================== */
+
+/* Ingen fallende kronblader på forsiden */
+.petals { display: none; }
+
+/* Invitasjonsdelen får samme salvia som Canva-siden */
+#invitasjon { background: var(--sage); padding-top: var(--space-5); }
+
+/* 1 enhet (--u) = 1 px i Canva-utkastet (620 px bredt). Alt skalerer med skjermbredden. */
+.kollasje-wrap { container-type: inline-size; width: min(100%, 560px); margin: 0 auto var(--space-5); }
+.kollasje { --u: calc(100cqw / 620); position: relative; height: calc(850 * var(--u)); }
+.k { position: absolute; margin: 0; }
+
+.k-env     { left: calc(108 * var(--u)); top: calc(12 * var(--u));  width: calc(410 * var(--u)); z-index: 1; }
+.k-navn    { left: calc(44 * var(--u));  top: calc(300 * var(--u)); width: calc(300 * var(--u)); height: calc(225 * var(--u)); z-index: 3; rotate: -1deg; }
+.k-std     { left: calc(342 * var(--u)); top: calc(236 * var(--u)); width: calc(230 * var(--u)); height: calc(284 * var(--u)); z-index: 2; rotate: 4deg; }
+.k-blomst  { left: calc(255 * var(--u)); top: calc(575 * var(--u)); width: calc(80 * var(--u));  z-index: 2; }
+.k-rsvp    { left: calc(88 * var(--u));  top: calc(545 * var(--u)); width: calc(176 * var(--u)); height: calc(192 * var(--u)); z-index: 3; rotate: -3deg; }
+.k-polaroid{ left: calc(330 * var(--u)); top: calc(552 * var(--u)); width: calc(215 * var(--u)); z-index: 4; rotate: -1deg; }
+.k-peon    { left: calc(22 * var(--u)); top: calc(500 * var(--u)); width: calc(118 * var(--u)); z-index: 3; rotate: -8deg; filter: drop-shadow(0 2px 3px #2b21181f); pointer-events: none; }
+.k-disk    { left: calc(260 * var(--u)); top: calc(722 * var(--u)); width: calc(100 * var(--u)); height: calc(100 * var(--u)); z-index: 6; }
+
+/* Papirkort */
+.k-navn, .k-std, .k-rsvp { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); text-decoration: none; }
+.k-navn::before, .k-std::before, .k-rsvp::before { content: ""; position: absolute; inset: calc(8 * var(--u)); border: 1px solid var(--inset); pointer-events: none; }
+
+.k-navn { background: var(--forest); color: var(--on-dark); }
+.k-navn::before { border-color: var(--inset-dark); }
+.k-navn { padding: 0 calc(26 * var(--u)); }
+.k-navn__hilsen { font: italic 400 max(11px, calc(17 * var(--u)))/1.2 var(--font-serif); margin-bottom: calc(6 * var(--u)); }
+.k-navn__script { font: 400 calc(54 * var(--u))/1.05 var(--font-script); white-space: nowrap; }
+.k-navn__caps { display: flex; align-items: center; gap: calc(10 * var(--u)); margin-top: calc(8 * var(--u)); font: 600 max(9px, calc(14 * var(--u)))/1 var(--font-caps); letter-spacing: .32em; text-transform: uppercase; }
+.k-navn__caps::before, .k-navn__caps::after { content: ""; width: calc(28 * var(--u)); height: 1px; background: currentColor; opacity: .6; }
+.k-navn__tekst { margin-top: calc(10 * var(--u)); font: italic 400 max(11px, calc(16 * var(--u)))/1.3 var(--font-serif); }
+
+.k-std, .k-rsvp { background: var(--raised); color: var(--brown); }
+.k-std { justify-content: center; gap: calc(4 * var(--u)); padding: 0 calc(20 * var(--u)); color: var(--ink); }
+.k-std .ikon--hus { width: calc(100 * var(--u)); }
+.k-std .ikon--ringer { width: calc(40 * var(--u)); margin-top: calc(10 * var(--u)); }
+.k-std__sted { font: 600 calc(22 * var(--u))/1.2 var(--font-serif); margin-top: calc(4 * var(--u)); }
+.k-std__by { font: 400 max(9px, calc(14 * var(--u)))/1.3 var(--font-serif); }
+.k-std__dato { font: 600 calc(20 * var(--u))/1.2 var(--font-serif); }
+.k-std__samme { margin-top: calc(8 * var(--u)); font: 600 max(8px, calc(11 * var(--u)))/1.35 var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
+.k-rsvp__lead { font: 400 calc(28 * var(--u))/1 var(--font-script); }
+.k-rsvp__word { font: 500 calc(24 * var(--u))/1.15 var(--font-serif); letter-spacing: .08em; text-transform: uppercase; }
+.k-rsvp__frist { font: italic 400 max(10px, calc(16 * var(--u)))/1.3 var(--font-serif); color: var(--muted); margin-top: calc(8 * var(--u)); }
+.k-rsvp__knapp { margin-top: calc(12 * var(--u)); padding-bottom: calc(2 * var(--u)); border-bottom: 1px solid currentColor; font: 600 max(8px, calc(11 * var(--u)))/1.2 var(--font-caps); letter-spacing: .16em; text-transform: uppercase; }
+
+.k-polaroid { box-sizing: border-box; padding: calc(10 * var(--u)) calc(10 * var(--u)) calc(34 * var(--u)); background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
+.k-polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+
+.k-disk { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--calla); color: var(--on-dark); text-decoration: none; box-shadow: var(--shadow-paper); }
+.k-disk__caps { font: 600 max(8px, calc(11 * var(--u)))/1.2 var(--font-caps); letter-spacing: .18em; text-transform: uppercase; }
+.k-disk__script { font: 400 calc(28 * var(--u))/1.1 var(--font-script); }
+
+/* Klikkbare kort løftes litt */
+a.k { transition: transform 250ms ease-out, box-shadow 250ms ease-out, background-color 250ms ease-out; }
+a.k:hover { transform: translateY(-4px); box-shadow: var(--shadow-lifted); }
+.k-disk:hover { background: var(--wine); }
+a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+/* ---------- Kortene glir ut av konvolutten ---------- */
+.js .k { opacity: 0; }
+.is-open .k { animation: kUt 1000ms cubic-bezier(.2, .8, .2, 1) both; }
+.is-open .k-env      { animation-name: kInn; animation-delay: 300ms; }
+.is-open .k-navn     { animation-delay: 800ms; }
+.is-open .k-std      { animation-delay: 950ms; }
+.is-open .k-rsvp     { animation-delay: 1100ms; }
+.is-open .k-polaroid { animation-delay: 1250ms; }
+.is-open .k-blomst   { animation-name: kInn; animation-delay: 1450ms; }
+.is-open .k-peon     { animation-name: kInn; animation-delay: 1550ms; }
+.is-open .k-disk     { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1900ms both; }
+.js .k-polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
+.is-open .k-polaroid img { animation: develop 1200ms ease-out 1700ms forwards; }
+
+@keyframes kInn   { from { opacity: 0; translate: 0 -30px; } to { opacity: 1; translate: 0 0; } }
+@keyframes kUt    { from { opacity: 0; translate: 0 calc(-180 * var(--u)); scale: .6; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes popp   { from { opacity: 0; scale: 0; } to { opacity: 1; scale: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-open .k, .is-open .k-disk, .is-open .k-polaroid img { animation: none !important; opacity: 1; filter: none; }
+}
+
+/* Kollasjen bruker hele skjermbredden på mobil */
+@media (max-width: 560px) {
+  .kollasje-wrap { width: 100vw; margin-inline: calc(50% - 50vw); }
+}
+
+/* =====================================================
+   V4 – NYE CANVA-SIDER: NEDTELLING OG STEDET
+   ===================================================== */
+
+/* Forsiden: større konvolutt og tekst tettere på navnene */
+.cover__title { margin-top: 0; font: 600 clamp(17px, 3vw, 26px)/1.2 var(--font-caps); letter-spacing: .04em; }
+.env { width: min(440px, 82vw); }
+.cover__hint { font: 600 clamp(15px, 2.4vw, 20px)/1.4 var(--font-caps); letter-spacing: .06em; }
+
+/* Nedtelling nederst i invitasjonsdelen: til høyre, med den hvite buketten nederst til venstre (som i Canva) */
+#invitasjon { position: relative; overflow: hidden; }
+.nedtelling__bukett { position: absolute; left: 0; bottom: 0; height: clamp(118px, 30vw, 340px); width: auto; pointer-events: none; user-select: none; }
+.nedtelling { position: relative; z-index: 1; width: min(60%, 470px); margin: var(--space-5) max(var(--space-3), 50% - 470px) 0 auto; text-align: center; }
+.nedtelling__tall { display: flex; align-items: flex-start; justify-content: center; gap: clamp(6px, 2vw, 22px); }
+.nedtelling__enhet { display: flex; flex-direction: column; align-items: center; min-width: 2.4ch; }
+.nedtelling__enhet strong { font: 600 clamp(40px, 9vw, 84px)/1 var(--font-serif); font-variant-numeric: lining-nums tabular-nums; color: var(--brown); }
+.nedtelling__enhet span { margin-top: var(--space-2); font: 600 clamp(11px, 1.8vw, 15px)/1 var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
+.nedtelling__kolon { font: 600 clamp(30px, 7vw, 64px)/1 var(--font-serif); color: var(--brown); opacity: .6; }
+.nedtelling__tekst { margin-top: var(--space-3); font-size: clamp(32px, 6vw, 56px); line-height: 1.1; color: var(--ink); }
+
+@media (max-width: 560px) {
+  .env { width: min(360px, 86vw); }
+}
+
+/* =====================================================
+   V5 – KONVOLUTT MED PAPIRTEKSTUR SOM GÅR BAK KORTENE
+   ===================================================== */
+
+:root {
+  /* Papirstruktur: mørke korn + lyse fibre, tegnet med SVG-støy */
+  /* Papirstruktur hentet fra konvolutten i Canva-designet (nøytral gråtone, legges over fargen) */
+  --papir: url("assets/papir.png");
+  --papir-str: 170px auto;
+  --envelope-canva: #626552;
+}
+
+.k-env { left: calc(108 * var(--u)); top: calc(12 * var(--u)); width: calc(410 * var(--u)); z-index: 1; }
+.k-env img { position: relative; z-index: 1; width: 100%; }
+/* Den nederste delen av konvolutten fortsetter ned bak kortene */
+.k-env__lomme { position: absolute; z-index: 0; left: calc(7 * var(--u)); width: calc(334 * var(--u)); top: calc(240 * var(--u)); height: calc(120 * var(--u)); border-radius: 0 0 var(--radius-paper) var(--radius-paper); background: var(--papir) 0 0 / var(--papir-str), var(--envelope-canva); background-blend-mode: overlay; box-shadow: var(--shadow-paper); }
+/* Samme tekstur lagt over bildedelen, begrenset til konvolutten */
+.k-env::after { content: ""; position: absolute; z-index: 2; inset: 0 0 auto 0; aspect-ratio: 780 / 530; background: var(--papir) 0 0 / var(--papir-str); mix-blend-mode: overlay; -webkit-mask: url("assets/konvolutt-maske.png") 0 0 / 100% 100% no-repeat; mask: url("assets/konvolutt-maske.png") 0 0 / 100% 100% no-repeat; pointer-events: none; }
+
+/* Konvolutten på forsiden får samme papirfølelse */
+.env__body, .env__pocket, .env__flap { background-image: var(--papir); background-size: var(--papir-str); background-blend-mode: overlay; }
+
+/* Linjeikoner: 1,5 px i green-leaf, som designsystemet sier */
+.ikon { color: var(--leaf); }
