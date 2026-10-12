@@ -468,3 +468,69 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 
 /* Linjeikoner: 1,5 px i green-leaf, som designsystemet sier */
 .ikon { color: var(--leaf); }
+
+/* =====================================================
+   V6 – ÅPNING I ÉN SCENE
+   Konvolutten åpnes der den ligger, flyr opp på plass,
+   og kortene glir ut av den – uten å bytte side.
+   ===================================================== */
+
+/* Forsiden er hele scenen; den låses opp når kortene ligger på plass */
+.js .cover { height: 100svh; min-height: 560px; }
+.js .cover.is-done { position: relative; inset: auto; z-index: auto; touch-action: auto; }
+
+/* Navn, buketter og hint toner ut når konvolutten trykkes */
+.cover.is-opening .cover__names,
+.cover.is-opening .cover__title,
+.cover.is-opening .cover__hint,
+.cover.is-opening .bouquet { animation: fadeOut 600ms ease-out forwards !important; pointer-events: none; }
+@keyframes fadeOut { to { opacity: 0; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Konvolutten: seglet blir sittende, klaffen viser akvarellforet */
+.env.is-open { animation: none !important; cursor: default; }
+.env.is-open .seal { animation: none !important; opacity: 1; }
+.env.is-open .env__flap { transition: none; animation: flapOpen 900ms ease-in-out 250ms forwards; }
+.env.is-open .env__card { transform: translateY(-40%); transition: transform 900ms cubic-bezier(.2, .8, .2, 1) 950ms; }
+.env.is-flying { transition: transform 1000ms cubic-bezier(.65, 0, .25, 1), opacity 600ms ease-out; }
+.env.is-landed { opacity: 0; transition: opacity 600ms ease-out; pointer-events: none; }
+@keyframes flapOpen {
+  0%    { transform: rotateX(0); z-index: 3; }
+  49.9% { z-index: 3; }
+  50%   { background-image: url("assets/konvolutt-for.jpg"); background-size: cover; background-position: center; background-blend-mode: normal; z-index: 0; }
+  100%  { transform: rotateX(180deg); background-image: url("assets/konvolutt-for.jpg"); background-size: cover; background-position: center; background-blend-mode: normal; z-index: 0; }
+}
+
+/* Scenen: kollasjen ligger midt på skjermen, tilpasset både høyde og bredde */
+.stage { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 1; }
+.cover.is-done .stage { pointer-events: auto; }
+.stage .kollasje-wrap { width: min(560px, 100vw, calc((100svh - 110px) * 620 / 850)); margin: 0; }
+.k-slot { position: absolute; left: calc(115 * var(--u)); top: calc(153 * var(--u)); width: calc(334 * var(--u)); height: calc(219 * var(--u)); }
+
+/* Kortene glir ut fra konvolutten (startpunktet regnes ut i main.js) */
+.cover.is-collage .k { animation: kFra 1000ms cubic-bezier(.2, .8, .2, 1) both; }
+.cover.is-collage .k-env      { animation: fadeIn 600ms ease-out both; }
+.cover.is-collage .k-navn     { animation-delay: 450ms; }
+.cover.is-collage .k-std      { animation-delay: 600ms; }
+.cover.is-collage .k-rsvp     { animation-delay: 800ms; }
+.cover.is-collage .k-polaroid { animation-delay: 950ms; }
+.cover.is-collage .k-blomst   { animation: fadeIn 700ms ease-out 1150ms both; }
+.cover.is-collage .k-peon     { animation: fadeIn 700ms ease-out 1250ms both; }
+.cover.is-collage .k-disk     { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1450ms both; }
+.cover.is-collage .k-polaroid img { animation: develop 1200ms ease-out 1400ms forwards; }
+@keyframes kFra { from { opacity: 0; translate: var(--fx, 0) var(--fy, 0); scale: .35; } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+/* «Bla ned» når alt ligger på plass */
+.scroll-hint { position: absolute; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font: 600 12px/16px var(--font-caps); letter-spacing: .24em; text-transform: uppercase; color: var(--brown); text-decoration: none; opacity: 0; pointer-events: none; }
+.scroll-hint__pil { width: 10px; height: 10px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; rotate: 45deg; }
+.cover.is-done .scroll-hint { opacity: 1; pointer-events: auto; transition: opacity 600ms ease-out; animation: bob 2s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { translate: -50% 0; } 50% { translate: -50% 6px; } }
+
+/* Nedtellingen står rett under scenen */
+#invitasjon { padding-top: var(--space-5); }
+
+@media (prefers-reduced-motion: reduce) {
+  .env.is-open .env__flap { animation-duration: 1ms; animation-delay: 0ms; }
+  .env.is-open .env__card, .env.is-flying, .env.is-landed { transition-duration: 1ms; transition-delay: 0ms; }
+  .cover.is-collage .k, .cover.is-collage .k-polaroid img { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+}
