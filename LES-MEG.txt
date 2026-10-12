@@ -1,0 +1,16 @@
+EMILIE & STIG – BRYLLUPSNETTSIDE (UTKAST 1)
+
+Slik legger du den ut på Netlify (gratis):
+1. Gå til app.netlify.com og lag en konto.
+2. Velg "Add new site" -> "Deploy manually".
+3. Dra HELE mappen "emilie-og-stig" inn i feltet.
+4. Ferdig - du får en adresse som xxxx.netlify.app (kan endres under Site settings).
+
+RSVP-svarene:
+- Netlify finner skjemaet automatisk. Svarene ligger under "Forms" -> "rsvp".
+- Varsel på e-post: Site configuration -> Notifications -> Form submission notifications.
+- Svarene kan lastes ned som CSV (åpnes i Excel).
+- Skjemaet virker bare når siden ligger på Netlify, ikke når du åpner filen lokalt.
+
+Plassholdere som må byttes ut: klokkeslett i programmet, RSVP-frist (1. mai 2027),
+dresscode, overnatting, gaveønsker og kontaktinfo. Alt ligger i index.html.

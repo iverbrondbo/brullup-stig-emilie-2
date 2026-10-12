@@ -1,0 +1,412 @@
+/* Emilie & Stig – bryllupsnettside. Bygget på designsystemet «Emilie & Stig». */
+
+@font-face { font-family: "Great Vibes"; src: url("fonts/GreatVibes-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Cormorant SC"; src: url("fonts/CormorantSC-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Cormorant SC"; src: url("fonts/CormorantSC-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/CormorantGaramond-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/CormorantGaramond-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("fonts/CormorantGaramond-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+
+:root {
+  /* Flater */
+  --sage: #d1d4cd;          /* målt fra Canva-sidene */
+  --paper: #f7f3ea;
+  --raised: #fffdf8;
+  --forest: #3f4b38;
+  --envelope: #5d6e55;
+  --burgundy: #410013;
+  /* Tekst */
+  --brown: #4a2c0a;
+  --ink: #2b2118;
+  --muted: #6b6358;
+  --wine: #6b1a2e;
+  --on-dark: #f7f3ea;
+  /* Dekor */
+  --leaf: #4f6b53;
+  --sage-deep: #8fa08b;
+  --line: #ddd6c8;
+  --inset: #c9bfa9;
+  --inset-dark: #f7f3ea55;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px; --space-5: 40px; --space-6: 64px;
+  --radius-paper: 2px; --radius-sm: 6px; --radius-pill: 9999px;
+  --shadow-paper: 0 2px 4px #2b21180f, 0 8px 18px -4px #2b211826;
+  --shadow-lifted: 0 4px 8px #2b211814, 0 16px 30px -6px #2b211838;
+  --focus-ring: 0 0 0 3px var(--paper), 0 0 0 6px var(--leaf);
+
+  --font-script: "Great Vibes", "Snell Roundhand", cursive;
+  --font-caps: "Cormorant SC", "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 19px/29px var(--font-serif); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, p, figure { margin: 0; }
+a { color: var(--wine); }
+.hidden { display: none; }
+.script { font-family: var(--font-script); font-weight: 400; }
+.eyebrow { font: 600 12px/16px var(--font-caps); letter-spacing: .24em; text-transform: uppercase; }
+
+.wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+.narrow { width: min(640px, 100% - 32px); }
+
+/* ---------- Forside ---------- */
+.cover { position: relative; overflow: hidden; min-height: 100svh; background: var(--sage); color: var(--brown); display: grid; place-items: center; text-align: center; padding: var(--space-6) var(--space-3); }
+.bouquet { position: absolute; pointer-events: none; user-select: none; }
+.bouquet--tr { top: 0; right: 0; height: min(58vh, 520px); width: auto; }
+.bouquet--bl { bottom: 0; left: 0; height: min(42vh, 400px); width: auto; }
+.cover__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+.cover__names { font: 400 clamp(64px, 14vw, 128px)/1 var(--font-script); color: var(--brown); padding: 0 var(--space-3); }
+.cover__names .amp { font-size: .8em; }
+.cover__title { margin-top: var(--space-3); font: 600 clamp(16px, 2.4vw, 22px)/1.3 var(--font-caps); letter-spacing: .2em; text-transform: uppercase; }
+.cover__hint { margin-top: var(--space-5); font: 600 13px/18px var(--font-caps); letter-spacing: .2em; text-transform: uppercase; max-width: 24em; }
+
+/* Konvolutt */
+.env { position: relative; margin-top: var(--space-5); width: min(320px, 78vw); aspect-ratio: 320 / 210; border: 0; padding: 0; background: none; cursor: pointer; border-radius: var(--radius-paper); filter: drop-shadow(0 8px 14px #2b211829); perspective: 900px; }
+.env:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.env__body { position: absolute; inset: 0; border-radius: var(--radius-paper); background: color-mix(in srgb, var(--envelope) 86%, #000); }
+.env__pocket { position: absolute; inset: auto 0 0 0; height: 100%; background: var(--envelope); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); z-index: 2; border-radius: var(--radius-paper); }
+.env__flap { position: absolute; inset: 0 0 auto 0; height: 62%; background: color-mix(in srgb, var(--envelope) 92%, #000); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 3; transition: transform 800ms ease-in-out, z-index 0s 400ms; }
+.env__card { position: absolute; left: 8%; right: 8%; top: 8%; bottom: 8%; z-index: 1; background: var(--paper); border-radius: var(--radius-paper); color: var(--brown); display: grid; place-items: start center; padding-top: 10%; transition: transform 800ms ease-in-out 250ms; }
+.env__card .script { font-size: clamp(30px, 8vw, 40px); line-height: 1.1; }
+.seal { position: absolute; left: 50%; top: 62%; width: 96px; height: 96px; transform: translate(-50%, -50%); z-index: 4; filter: drop-shadow(0 3px 4px #3e0a1766); transition: opacity 300ms ease-out; }
+.env:hover .seal { transform: translate(-50%, -50%) scale(1.04); transition: transform 250ms ease-out; }
+.env.is-open .env__flap { transform: rotateX(180deg); z-index: 0; }
+.env.is-open .env__card { transform: translateY(-62%); }
+.env.is-open .seal { opacity: 0; }
+
+/* ---------- Seksjoner ---------- */
+.section { padding: var(--space-6) 0; }
+.section--paper { background: var(--paper); }
+.section--sage { background: var(--sage); padding: var(--space-6) 0 calc(var(--space-6) + 24px); }
+
+.heading { display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--brown); margin-bottom: var(--space-3); }
+.heading__script { font-size: clamp(48px, 9vw, 64px); line-height: 1; }
+.heading__caps { font: 600 22px/28px var(--font-caps); letter-spacing: .2em; text-transform: uppercase; color: var(--wine); margin-top: var(--space-1); }
+.note { text-align: center; font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); margin-bottom: var(--space-5); }
+
+.divider { display: flex; align-items: center; gap: var(--space-3); width: 160px; margin: 0 auto; color: var(--sage-deep); }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: currentColor; }
+.divider svg { width: 28px; height: 14px; flex: none; }
+
+/* ---------- Kollasje / Save the Date ---------- */
+.collage { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-4); padding: var(--space-3) 0 var(--space-5); }
+.card { position: relative; width: 260px; padding: var(--space-5) var(--space-4); background: var(--raised); color: var(--brown); text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
+.card::before { content: ""; position: absolute; inset: var(--space-2); border: 1px solid var(--inset); pointer-events: none; }
+.card--forest { background: var(--forest); color: var(--on-dark); }
+.card--forest::before { border-color: var(--inset-dark); }
+.card__script { font: 400 46px/1.1 var(--font-script); margin: var(--space-2) 0; }
+.card__caps { font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; margin-top: var(--space-3); }
+.card__line { font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); margin-top: var(--space-2); }
+.tilt-left { rotate: -3deg; }
+.tilt-slight { rotate: -1deg; }
+.tilt-right { rotate: 3deg; }
+
+.polaroid { width: 220px; padding: 12px 12px 48px; background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); position: relative; }
+.polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+.polaroid figcaption { position: absolute; inset: auto 0 8px; text-align: center; font: 400 28px/30px var(--font-script); color: var(--brown); }
+
+.intro { text-align: center; max-width: 34em; }
+.lead { font-size: 22px; line-height: 32px; }
+.countdown { margin-top: var(--space-3); font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--wine); }
+
+/* ---------- Program ---------- */
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li { display: grid; grid-template-columns: 76px 1fr; gap: var(--space-3); padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
+.time { font: 600 18px/29px var(--font-caps); letter-spacing: .1em; color: var(--wine); }
+.timeline h3 { font: 600 17px/29px var(--font-caps); letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
+.timeline p { color: var(--ink); }
+
+/* ---------- Praktisk info ---------- */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); }
+.info { position: relative; background: var(--raised); border-top: 10px solid var(--leaf); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: var(--space-4) var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); }
+.info .eyebrow { color: var(--leaf); }
+.info h3 { font: 600 20px/28px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--brown); }
+.info .btn { align-self: flex-start; margin-top: var(--space-2); }
+
+/* ---------- Knapper ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border-radius: var(--radius-pill); border: 1.5px solid var(--wine); background: transparent; color: var(--wine); font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out; }
+.btn--primary { background: var(--burgundy); border-color: var(--burgundy); color: var(--on-dark); }
+.btn--primary:hover { background: var(--wine); border-color: var(--wine); }
+.btn--secondary:hover { background: var(--burgundy); border-color: var(--burgundy); color: var(--on-dark); }
+.btn--ghost { border-color: transparent; color: var(--leaf); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.btn--block { width: 100%; margin-top: var(--space-4); }
+.btn:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.btn[disabled] { opacity: .6; pointer-events: none; }
+
+/* ---------- RSVP ---------- */
+.rsvp { position: relative; background: var(--paper); border-left: 14px solid var(--burgundy); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); padding: var(--space-5) clamp(20px, 6vw, 56px); }
+.rsvp::before { content: ""; position: absolute; inset: var(--space-2); border: 1px solid var(--inset); pointer-events: none; }
+.rsvp form, .rsvp .thanks { position: relative; }
+.heading--card .heading__script { font-size: clamp(40px, 8vw, 52px); }
+.heading--card .heading__caps { font-size: 30px; line-height: 36px; color: var(--brown); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+
+.field { display: flex; flex-direction: column; gap: var(--space-2); margin: 0 0 var(--space-4); padding: 0; border: 0; min-width: 0; }
+.label { font: 600 15px/20px var(--font-caps); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0; }
+.input { font: inherit; font-size: 19px; line-height: 27px; min-height: 48px; width: 100%; padding: 10px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--raised); color: var(--ink); }
+.input::placeholder { color: var(--muted); font-style: italic; opacity: .85; }
+.input:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); border-color: var(--leaf); }
+.input[aria-invalid="true"] { border-color: var(--wine); }
+textarea.input { resize: vertical; }
+select.input { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+.hint { font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); }
+.error { font-style: italic; font-size: 15px; line-height: 22px; color: var(--wine); }
+.form-error { margin-top: var(--space-3); text-align: center; }
+
+.choice { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); align-items: center; }
+.choice__opt { position: relative; }
+.choice__opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choice__opt input:focus-visible + .btn { box-shadow: var(--focus-ring); }
+.choice__opt input:checked + .btn--secondary { background: var(--forest); border-color: var(--forest); color: var(--on-dark); }
+.choice__opt input:checked + .btn--ghost { color: var(--wine); text-decoration-thickness: 2px; }
+
+.if-yes { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 250ms ease-out, opacity 250ms ease-out; }
+.if-yes > * { min-height: 0; }
+.if-yes.is-hidden { display: none; }
+
+.thanks { text-align: center; padding: var(--space-4) 0; color: var(--brown); }
+.thanks__script { font-size: 56px; line-height: 64px; margin-bottom: var(--space-2); }
+
+/* ---------- Bunn ---------- */
+.footer { background: var(--forest); color: var(--on-dark); text-align: center; padding: var(--space-5) var(--space-3) calc(var(--space-5) + env(safe-area-inset-bottom)); }
+.footer__names { font: 400 44px/1.1 var(--font-script); }
+.footer__date { margin-top: var(--space-2); font: 600 14px/20px var(--font-caps); letter-spacing: .3em; }
+
+/* ---------- Inn-toning ---------- */
+.js .reveal { opacity: 0; translate: 0 16px; transition: opacity 600ms ease-out, translate 600ms ease-out; }
+.js .reveal.is-visible { opacity: 1; translate: 0 0; }
+
+@media (max-width: 560px) {
+  body { font-size: 18px; line-height: 28px; }
+  .bouquet--tr { height: 34vh; }
+  .bouquet--bl { height: 26vh; }
+  .cover { padding-top: 22vh; padding-bottom: 18vh; place-items: start center; }
+  .collage { gap: var(--space-5); }
+  .timeline li { grid-template-columns: 64px 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .env__flap, .env__card, .btn, .seal { transition: none !important; }
+  .js .reveal { translate: none; transition: opacity 400ms ease-out; }
+}
+
+/* =====================================================
+   V2 – ANIMASJONER, LÅST FORSIDE OG MOBIL
+   ===================================================== */
+
+/* ---------- Låst forside: man må åpne konvolutten ---------- */
+.js .cover { position: fixed; inset: 0; z-index: 50; height: 100svh; min-height: 0; padding: 0 var(--space-3); place-items: center; touch-action: none; }
+.js.is-locked, .js.is-locked body { overflow: hidden; height: 100%; }
+.js.is-locked main, .js.is-locked .footer { visibility: hidden; }
+.cover.is-leaving { animation: coverOut 1200ms cubic-bezier(.7, 0, .2, 1) forwards; pointer-events: none; }
+.cover.is-gone { display: none; }
+@keyframes coverOut {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-105%); opacity: .6; }
+}
+
+/* ---------- Forsiden kommer inn ---------- */
+.js .cover__names { animation: write 1800ms cubic-bezier(.5, 0, .2, 1) 300ms both; }
+.js .cover__title { animation: fadeUp 900ms ease-out 1500ms both; }
+.js .env { animation: dropIn 1100ms cubic-bezier(.2, .9, .3, 1.2) 1800ms both, float 4s ease-in-out 3000ms infinite; }
+.js .cover__hint { animation: fadeUp 800ms ease-out 2600ms both, breathe 2.6s ease-in-out 3400ms infinite; }
+.js .bouquet--tr { transform-origin: top right; animation: inTR 1600ms cubic-bezier(.2, .8, .2, 1) both, swayTR 7s ease-in-out 1600ms infinite; }
+.js .bouquet--bl { transform-origin: bottom left; animation: inBL 1600ms cubic-bezier(.2, .8, .2, 1) 200ms both, swayBL 8s ease-in-out 1800ms infinite; }
+.js .seal { animation: glow 2.4s ease-in-out 3000ms infinite; }
+
+@keyframes write   { from { clip-path: inset(-20% 100% -20% 0); filter: blur(3px); } to { clip-path: inset(-20% 0 -20% 0); filter: blur(0); } }
+@keyframes fadeUp  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes dropIn  { from { opacity: 0; transform: translateY(-60px) rotate(-8deg) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes float   { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-8px) rotate(-.6deg); } }
+@keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+@keyframes inTR    { from { opacity: 0; transform: translate(30%, -30%) rotate(8deg); } to { opacity: 1; transform: none; } }
+@keyframes inBL    { from { opacity: 0; transform: translate(-30%, 30%) rotate(-8deg); } to { opacity: 1; transform: none; } }
+@keyframes swayTR  { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-1.6deg); } }
+@keyframes swayBL  { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(1.4deg); } }
+@keyframes glow    { 0%, 100% { filter: drop-shadow(0 3px 4px #3e0a1766); } 50% { filter: drop-shadow(0 0 14px #55161b99); } }
+
+/* ---------- Kronblader som daler ---------- */
+.petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.petal { position: absolute; top: -40px; left: var(--x); width: var(--s); height: calc(var(--s) * 1.3); border-radius: 60% 0 60% 0; background: var(--c); opacity: .85; animation: fall var(--d) linear var(--delay) infinite; }
+@keyframes fall {
+  0%   { transform: translate(0, 0) rotate(0); }
+  50%  { transform: translate(var(--drift), 55svh) rotate(200deg); }
+  100% { transform: translate(calc(var(--drift) * -.5), 110svh) rotate(420deg); }
+}
+
+/* Utbrudd av kronblader når konvolutten åpnes og når RSVP sendes */
+.burst { position: fixed; z-index: 60; left: var(--ox); top: var(--oy); width: var(--s); height: calc(var(--s) * 1.3); border-radius: 60% 0 60% 0; background: var(--c); pointer-events: none; animation: burst var(--d) cubic-bezier(.1, .7, .3, 1) forwards; }
+@keyframes burst {
+  0%   { transform: translate(-50%, -50%) scale(.3) rotate(0); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--r)); opacity: 0; }
+}
+
+/* ---------- Konvolutten åpnes ---------- */
+.env.is-open { animation: none; }
+.env.is-open .seal { animation: sealPop 600ms cubic-bezier(.3, 0, .6, 1) forwards; transition: none; }
+.env.is-open .env__flap { transition-delay: 450ms; }
+.env.is-open .env__card { transform: translateY(-78%) scale(1.06); transition: transform 900ms cubic-bezier(.2, .8, .2, 1) 1000ms; }
+@keyframes sealPop {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  35%  { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+  100% { transform: translate(-50%, 40%) scale(.4) rotate(-50deg); opacity: 0; }
+}
+.cover.is-opening .cover__hint { animation: none; opacity: 0; transition: opacity 300ms; }
+
+/* ---------- Innholdet etter åpning ---------- */
+.js .collage > * { opacity: 0; }
+.is-open .collage > * { animation: cardIn 1100ms cubic-bezier(.2, .8, .2, 1) both; }
+.is-open .collage > :nth-child(1) { animation-delay: 700ms; }
+.is-open .collage > :nth-child(2) { animation-delay: 900ms; }
+.is-open .collage > :nth-child(3) { animation-delay: 1100ms; }
+@keyframes cardIn { from { opacity: 0; translate: 0 160px; scale: .85; } to { opacity: 1; translate: 0 0; scale: 1; } }
+
+.js .polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
+.is-open .polaroid img { animation: develop 1200ms ease-out 800ms forwards; }
+@keyframes develop { to { filter: sepia(0) brightness(1) blur(0); } }
+
+.js .intro { opacity: 0; }
+.is-open .intro { animation: fadeUp 900ms ease-out 1600ms both; }
+
+/* Overskrifter skrives fram */
+.js .heading__script { clip-path: inset(-20% 100% -20% 0); }
+.heading.is-visible .heading__script, .is-visible .heading .heading__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) 150ms forwards; }
+
+/* Programmet glir inn fra siden, linjene tegnes */
+.js .timeline li.reveal { translate: -40px 0; border-top-color: transparent; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--line); transform: scaleX(0); transform-origin: left; transition: transform 900ms ease-out 200ms; }
+.js .timeline li.is-visible { translate: 0 0; }
+.timeline li.is-visible::before { transform: scaleX(1); }
+.timeline .time { display: inline-block; }
+.timeline li.is-visible .time { animation: pop 600ms cubic-bezier(.3, 1.6, .5, 1) 300ms both; }
+@keyframes pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+
+/* Infokortene vippes opp */
+.js .info.reveal { transform: perspective(900px) rotateX(-35deg); transform-origin: top center; transition: opacity 700ms ease-out, translate 700ms ease-out, transform 900ms cubic-bezier(.2, .8, .2, 1), box-shadow 250ms ease-out; }
+.js .info.reveal.is-visible { transform: none; }
+.info:hover { box-shadow: var(--shadow-lifted); }
+
+/* RSVP-kortet glir inn som et brev */
+.js .rsvp.reveal { translate: 0 80px; rotate: -2deg; transition: opacity 900ms ease-out, translate 900ms cubic-bezier(.2, .8, .2, 1), rotate 900ms cubic-bezier(.2, .8, .2, 1); }
+.js .rsvp.reveal.is-visible { translate: 0 0; rotate: 0deg; }
+.thanks:not([hidden]) .thanks__script { animation: write 1400ms cubic-bezier(.5, 0, .2, 1) both; }
+.thanks:not([hidden]) p:last-child { animation: fadeUp 800ms ease-out 900ms both; }
+
+/* Knappene får litt liv */
+.btn { transition: background-color 250ms ease-out, color 250ms ease-out, border-color 250ms ease-out, transform 200ms ease-out; }
+.btn:active { transform: scale(.96); }
+
+/* ---------- Mobil først ---------- */
+@media (max-width: 560px) {
+  .js .cover { place-items: center; padding: 0 var(--space-3); }
+  .cover__inner { padding-top: 6svh; }
+  .cover__names { font-size: clamp(58px, 17vw, 76px); }
+  .env { width: min(340px, 84vw); }
+  .bouquet--tr { height: 30svh; }
+  .bouquet--bl { height: 24svh; }
+  .section { padding: 48px 0; }
+  .collage { flex-direction: column; gap: var(--space-4); }
+  .collage .card, .collage .polaroid { width: min(280px, 80vw); }
+  .collage > :nth-child(2) { margin-top: -28px; }
+  .collage > :nth-child(3) { margin-top: -20px; }
+  .info-grid { gap: var(--space-3); }
+  .rsvp { border-left-width: 8px; }
+  .choice { flex-direction: column; align-items: stretch; }
+  .choice__opt .btn { width: 100%; }
+}
+
+/* ---------- Redusert bevegelse ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .js .cover__names, .js .cover__title, .js .env, .js .cover__hint, .js .bouquet--tr, .js .bouquet--bl, .js .seal,
+  .is-open .collage > *, .is-open .polaroid img, .heading .heading__script, .timeline .time { animation: none !important; opacity: 1; clip-path: none; filter: none; }
+  .petals, .burst { display: none; }
+  .cover.is-leaving { animation: fadeOut 500ms forwards; }
+  @keyframes fadeOut { to { opacity: 0; } }
+  .js .info.reveal, .js .rsvp.reveal, .js .timeline li.reveal { transform: none; translate: none; rotate: none; }
+}
+
+/* =====================================================
+   V3 – KORTKOLLASJE SOM I CANVA
+   ===================================================== */
+
+/* Ingen fallende kronblader på forsiden */
+.petals { display: none; }
+
+/* Invitasjonsdelen får samme salvia som Canva-siden */
+#invitasjon { background: #d4d9c6; padding-top: var(--space-5); }
+
+/* 1 enhet (--u) = 1 px i Canva-utkastet (620 px bredt). Alt skalerer med skjermbredden. */
+.kollasje-wrap { container-type: inline-size; width: min(100%, 560px); margin: 0 auto var(--space-5); }
+.kollasje { --u: calc(100cqw / 620); position: relative; height: calc(820 * var(--u)); }
+.k { position: absolute; margin: 0; }
+
+.k-env     { left: calc(110 * var(--u)); top: calc(5 * var(--u));   width: calc(390 * var(--u)); z-index: 1; }
+.k-navn    { left: calc(47 * var(--u));  top: calc(272 * var(--u)); width: calc(298 * var(--u)); height: calc(225 * var(--u)); z-index: 3; rotate: -.5deg; }
+.k-std     { left: calc(360 * var(--u)); top: calc(252 * var(--u)); width: calc(198 * var(--u)); height: calc(270 * var(--u)); z-index: 2; rotate: 4deg; }
+.k-blomst  { left: calc(252 * var(--u)); top: calc(572 * var(--u)); width: calc(93 * var(--u));  z-index: 2; }
+.k-rsvp    { left: calc(108 * var(--u)); top: calc(566 * var(--u)); width: calc(148 * var(--u)); height: calc(176 * var(--u)); z-index: 3; rotate: -4deg; }
+.k-segl    { left: calc(66 * var(--u));  top: calc(531 * var(--u)); width: calc(64 * var(--u));  z-index: 5; rotate: -12deg; filter: drop-shadow(0 3px 4px #3e0a1766); }
+.k-polaroid{ left: calc(345 * var(--u)); top: calc(563 * var(--u)); width: calc(172 * var(--u)); z-index: 4; rotate: 4deg; }
+.k-disk    { left: calc(261 * var(--u)); top: calc(708 * var(--u)); width: calc(100 * var(--u)); height: calc(100 * var(--u)); z-index: 6; }
+
+/* Papirkort */
+.k-navn, .k-std, .k-rsvp { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); text-decoration: none; }
+.k-navn::before, .k-std::before, .k-rsvp::before { content: ""; position: absolute; inset: calc(8 * var(--u)); border: 1px solid var(--inset); pointer-events: none; }
+
+.k-navn { background: var(--forest); color: var(--on-dark); }
+.k-navn::before { border-color: var(--inset-dark); }
+.k-navn__eyebrow { font: 600 max(10px, calc(13 * var(--u)))/1.2 var(--font-caps); letter-spacing: .2em; text-transform: uppercase; }
+.k-navn__script { font: 400 calc(52 * var(--u))/1.1 var(--font-script); margin-top: calc(14 * var(--u)); white-space: nowrap; }
+
+.k-std, .k-rsvp { background: var(--raised); color: var(--brown); }
+.k-std { justify-content: flex-start; padding: calc(40 * var(--u)) calc(22 * var(--u)) 0; gap: calc(9 * var(--u)); }
+.k-std__script { font: 400 calc(40 * var(--u))/1.05 var(--font-script); margin-bottom: calc(14 * var(--u)); }
+.k-std__linje { align-self: stretch; font: 600 max(9px, calc(12 * var(--u)))/1.6 var(--font-caps); letter-spacing: .14em; text-transform: uppercase; border-bottom: 1px solid #4a2c0a59; }
+
+.k-rsvp__lead { font: 400 calc(28 * var(--u))/1 var(--font-script); }
+.k-rsvp__word { font: 600 calc(40 * var(--u))/1.2 var(--font-caps); letter-spacing: .1em; text-transform: uppercase; }
+
+.k-polaroid { box-sizing: border-box; padding: calc(10 * var(--u)) calc(10 * var(--u)) calc(34 * var(--u)); background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
+.k-polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+
+.k-disk { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--calla, #55161b); color: var(--on-dark); text-decoration: none; box-shadow: var(--shadow-paper); }
+.k-disk__caps { font: 600 max(8px, calc(11 * var(--u)))/1.2 var(--font-caps); letter-spacing: .18em; text-transform: uppercase; }
+.k-disk__script { font: 400 calc(28 * var(--u))/1.1 var(--font-script); }
+
+/* Klikkbare kort løftes litt */
+a.k { transition: transform 250ms ease-out, box-shadow 250ms ease-out, background-color 250ms ease-out; }
+a.k:hover { transform: translateY(-4px); box-shadow: var(--shadow-lifted); }
+.k-disk:hover { background: var(--wine); }
+a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+
+/* ---------- Kortene glir ut av konvolutten ---------- */
+.js .k { opacity: 0; }
+.is-open .k { animation: kUt 1000ms cubic-bezier(.2, .8, .2, 1) both; }
+.is-open .k-env      { animation-name: kInn; animation-delay: 300ms; }
+.is-open .k-navn     { animation-delay: 800ms; }
+.is-open .k-std      { animation-delay: 950ms; }
+.is-open .k-rsvp     { animation-delay: 1100ms; }
+.is-open .k-polaroid { animation-delay: 1250ms; }
+.is-open .k-blomst   { animation-name: kInn; animation-delay: 1450ms; }
+.is-open .k-segl     { animation: stempel 700ms cubic-bezier(.3, 1.4, .5, 1) 1700ms both; }
+.is-open .k-disk     { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1900ms both; }
+.js .k-polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
+.is-open .k-polaroid img { animation: develop 1200ms ease-out 1700ms forwards; }
+
+@keyframes kInn   { from { opacity: 0; translate: 0 -30px; } to { opacity: 1; translate: 0 0; } }
+@keyframes kUt    { from { opacity: 0; translate: 0 calc(-180 * var(--u)); scale: .6; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes stempel{ 0% { opacity: 0; scale: 2.4; } 70% { opacity: 1; scale: .9; } 100% { opacity: 1; scale: 1; } }
+@keyframes popp   { from { opacity: 0; scale: 0; } to { opacity: 1; scale: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-open .k, .is-open .k-segl, .is-open .k-disk, .is-open .k-polaroid img { animation: none !important; opacity: 1; filter: none; }
+}
+
+/* Kollasjen bruker hele skjermbredden på mobil */
+@media (max-width: 560px) {
+  .kollasje-wrap { width: 100vw; margin-inline: calc(50% - 50vw); }
+}
