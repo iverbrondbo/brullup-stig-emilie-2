@@ -534,3 +534,25 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
   .env.is-open .env__card, .env.is-flying, .env.is-landed { transition-duration: 1ms; transition-delay: 0ms; }
   .cover.is-collage .k, .cover.is-collage .k-polaroid img { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 }
+
+/* Mobil: større kollasje og tekst som er lett å lese */
+@media (max-width: 560px) {
+  /* Kortene fyller hele bredden – den tomme kanten i utsnittet skjæres bort */
+  .stage .kollasje-wrap { width: min(calc(100vw * 620 / 580), calc((100svh - 90px) * 620 / 850)); translate: calc(-100vw * 6 / 580) 0; }
+
+  .k-navn { padding: 0 calc(18 * var(--u)); }
+  .k-navn__hilsen { font-size: 14px; }
+  .k-navn__caps   { font-size: 11px; letter-spacing: .26em; }
+  .k-navn__tekst  { font-size: 13.5px; line-height: 1.25; }
+  .k-std { gap: calc(3 * var(--u)); padding: 0 calc(14 * var(--u)); }
+  .k-std__sted    { font-size: 17px; }
+  .k-std__by      { font-size: 12px; }
+  .k-std__dato    { font-size: 16px; }
+  .k-std__samme   { font-size: 10px; letter-spacing: .1em; }
+  .k-rsvp__word   { font-size: 19px; }
+  .k-rsvp__frist  { font-size: 12.5px; }
+  .k-rsvp__knapp  { font-size: 10.5px; }
+  .k-disk__caps   { font-size: 8.5px; letter-spacing: .12em; }
+  .k-disk__script { font-size: 22px; }
+  .scroll-hint    { font-size: 13px; }
+}
