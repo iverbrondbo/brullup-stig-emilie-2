@@ -29,36 +29,55 @@ function burst(x, y, amount = 36) {
   }
 }
 
-// ---------- Konvolutten: må åpnes for å komme videre ----------
+// ---------- Konvolutten åpnes i samme scene, og kortene glir ut av den ----------
 const env = document.getElementById('envelope');
+const slot = document.getElementById('env-slot');
+const stage = document.getElementById('stage');
+const T = reduce ? 0 : 1; // med redusert bevegelse går alt rett til sluttbildet
+const wait = (ms) => new Promise((r) => setTimeout(r, ms * T));
+const center = (r) => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+
 let opened = false;
-env.addEventListener('click', () => {
+env.addEventListener('click', async () => {
   if (opened) return;
   opened = true;
+  window.scrollTo(0, 0);
+
+  // 1. Navn, buketter og hint toner ut – konvolutten åpner seg der den ligger
   cover.classList.add('is-opening');
   env.classList.add('is-open');
+  env.style.transform = 'none';
+  await wait(1700);
 
-  const t = reduce ? 0 : 1;
-  setTimeout(() => {
-    const r = env.getBoundingClientRect();
-    burst(r.left + r.width / 2, r.top + r.height * 0.3, window.innerWidth < 560 ? 28 : 44);
-  }, 1300 * t);
+  // 2. Konvolutten flyr opp til plassen sin i kollasjen
+  const a = env.getBoundingClientRect();
+  const b = slot.getBoundingClientRect();
+  env.style.transformOrigin = '0 0';
+  env.classList.add('is-flying');
+  env.style.transform = `translate(${b.left - a.left}px, ${b.top - a.top}px) scale(${b.width / a.width})`;
+  await wait(1000);
 
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-    root.classList.remove('is-locked');
-    root.classList.add('is-open');
-    cover.classList.add('is-leaving');
-  }, 2100 * t);
+  // 3. Den ekte konvolutten fra designet tar over, og kortene glir ut av den
+  const from = center(b);
+  document.querySelectorAll('.kollasje .k').forEach((k) => {
+    const c = center(k.getBoundingClientRect());
+    k.style.setProperty('--fx', `${from.x - c.x}px`);
+    k.style.setProperty('--fy', `${from.y - c.y}px`);
+  });
+  cover.classList.add('is-collage');
+  env.classList.add('is-landed');
+  burst(from.x, from.y - b.height * 0.5, window.innerWidth < 560 ? 26 : 40);
+  await wait(2200);
 
-  setTimeout(() => {
-    cover.classList.add('is-gone');
-  }, (2100 + 1200) * t + 50);
+  // 4. Ferdig: siden kan blas videre
+  env.hidden = true;
+  cover.classList.add('is-done');
+  stage.removeAttribute('aria-hidden');
+  root.classList.remove('is-locked');
+  root.classList.add('is-open');
 });
 
 // ---------- Inn-toning når seksjonene kommer til syne ----------
-document.querySelectorAll('.collage .reveal, .intro.reveal').forEach((el) => el.classList.remove('reveal'));
-
 const io = 'IntersectionObserver' in window
   ? new IntersectionObserver((entries) => {
       entries.forEach((e) => {
