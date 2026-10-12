@@ -32,28 +32,40 @@ function burst(x, y, amount = 36) {
 // ---------- Konvolutten: må åpnes for å komme videre ----------
 const env = document.getElementById('envelope');
 let opened = false;
+const kEnv = document.querySelector('.k-env');
+
+// Konvoluttens åpning i kollasjen, i Canva-enheter (kollasjen er 620 enheter bred)
+const APNING = { x: 115 + 167, y: 136 + 57 };
+
 env.addEventListener('click', () => {
   if (opened) return;
   opened = true;
-  cover.classList.add('is-opening');
+  window.scrollTo(0, 0);
   env.classList.add('is-open');
+
+  // Flytt forsidekonvolutten nøyaktig over den identiske konvolutten i kollasjen
+  const fra = env.getBoundingClientRect();
+  const til = kEnv.getBoundingClientRect();
+  const dx = til.left + til.width / 2 - (fra.left + fra.width / 2);
+  const dy = til.top + til.height / 2 - (fra.top + fra.height / 2);
+  env.style.translate = `${dx}px ${dy}px`;
+  env.style.scale = til.width / fra.width;
+
+  // Hvert kort starter i konvoluttens åpning og flyr til plassen sin
+  const ku = kEnv.parentElement.offsetWidth / 620;
+  document.querySelectorAll('.kollasje .k:not(.k-env)').forEach((k) => {
+    k.style.setProperty('--dx', `${APNING.x * ku - (k.offsetLeft + k.offsetWidth / 2)}px`);
+    k.style.setProperty('--dy', `${APNING.y * ku - (k.offsetTop + k.offsetHeight / 2)}px`);
+  });
+
+  cover.classList.add('is-opening');
+  root.classList.add('is-open');
 
   const t = reduce ? 0 : 1;
   setTimeout(() => {
-    const r = env.getBoundingClientRect();
-    burst(r.left + r.width / 2, r.top + r.height * 0.3, window.innerWidth < 560 ? 28 : 44);
-  }, 1300 * t);
-
-  setTimeout(() => {
-    window.scrollTo(0, 0);
     root.classList.remove('is-locked');
-    root.classList.add('is-open');
-    cover.classList.add('is-leaving');
-  }, 2100 * t);
-
-  setTimeout(() => {
     cover.classList.add('is-gone');
-  }, (2100 + 1200) * t + 50);
+  }, 2000 * t);
 });
 
 // ---------- Inn-toning når seksjonene kommer til syne ----------

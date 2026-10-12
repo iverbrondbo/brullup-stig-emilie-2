@@ -70,12 +70,11 @@
     <h1 class="cover__names">Emilie <span class="amp">&amp;</span> Stig</h1>
     <p class="cover__title">Vi skal gifte oss!</p>
 
-    <button class="env" type="button" id="envelope" aria-label="Åpne invitasjonen">
-      <span class="env__body"></span>
-      <span class="env__card"><span class="script">Du er invitert</span></span>
-      <span class="env__pocket"></span>
-      <span class="env__flap"></span>
-      <img class="seal seal--lg" src="assets/vokssegl.png" alt="">
+    <button class="env konv" type="button" id="envelope" aria-label="Åpne invitasjonen">
+      <span class="konv__bak"></span>
+      <span class="konv__lomme"></span>
+      <span class="konv__klaff"><span class="konv__klaff-ut"></span><span class="konv__klaff-inn"></span></span>
+      <img class="konv__segl" src="assets/vokssegl.png" alt="">
     </button>
 
     <p class="cover__hint">Trykk på konvolutten<br>for å åpne</p>
@@ -88,10 +87,14 @@
 <section class="section section--paper" id="invitasjon">
   <div class="kollasje-wrap">
     <div class="kollasje">
-      <div class="k k-env" aria-hidden="true">
-        <span class="k-env__lomme"></span>
-        <img src="assets/konvolutt.png" alt="">
+      <!-- Samme konvolutt som på forsiden, her ferdig åpnet -->
+      <div class="k k-env konv is-open" aria-hidden="true">
+        <span class="konv__bak"></span>
+        <span class="konv__lomme"></span>
+        <span class="konv__klaff"><span class="konv__klaff-ut"></span><span class="konv__klaff-inn"></span></span>
+        <img class="konv__segl" src="assets/vokssegl.png" alt="">
       </div>
+      <img class="k k-klynge" src="assets/blomsterklynge.png" alt="">
       <div class="k k-navn">
         <p class="k-navn__hilsen" id="hilsen" hidden></p>
         <p class="k-navn__script">Emilie &amp; Stig</p>
