@@ -29,55 +29,48 @@ function burst(x, y, amount = 36) {
   }
 }
 
-// ---------- Konvolutten åpnes i samme scene, og kortene glir ut av den ----------
+// ---------- Konvolutten: må åpnes for å komme videre ----------
 const env = document.getElementById('envelope');
-const slot = document.getElementById('env-slot');
-const stage = document.getElementById('stage');
-const T = reduce ? 0 : 1; // med redusert bevegelse går alt rett til sluttbildet
-const wait = (ms) => new Promise((r) => setTimeout(r, ms * T));
-const center = (r) => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
-
 let opened = false;
-env.addEventListener('click', async () => {
+const kEnv = document.querySelector('.k-env');
+
+// Konvoluttens åpning i kollasjen, i Canva-enheter (kollasjen er 620 enheter bred)
+const APNING = { x: 115 + 167, y: 136 + 57 };
+
+env.addEventListener('click', () => {
   if (opened) return;
   opened = true;
   window.scrollTo(0, 0);
-
-  // 1. Navn, buketter og hint toner ut – konvolutten åpner seg der den ligger
-  cover.classList.add('is-opening');
   env.classList.add('is-open');
-  env.style.transform = 'none';
-  await wait(1700);
 
-  // 2. Konvolutten flyr opp til plassen sin i kollasjen
-  const a = env.getBoundingClientRect();
-  const b = slot.getBoundingClientRect();
-  env.style.transformOrigin = '0 0';
-  env.classList.add('is-flying');
-  env.style.transform = `translate(${b.left - a.left}px, ${b.top - a.top}px) scale(${b.width / a.width})`;
-  await wait(1000);
+  // Flytt forsidekonvolutten nøyaktig over den identiske konvolutten i kollasjen
+  const fra = env.getBoundingClientRect();
+  const til = kEnv.getBoundingClientRect();
+  const dx = til.left + til.width / 2 - (fra.left + fra.width / 2);
+  const dy = til.top + til.height / 2 - (fra.top + fra.height / 2);
+  env.style.translate = `${dx}px ${dy}px`;
+  env.style.scale = til.width / fra.width;
 
-  // 3. Den ekte konvolutten fra designet tar over, og kortene glir ut av den
-  const from = center(b);
-  document.querySelectorAll('.kollasje .k').forEach((k) => {
-    const c = center(k.getBoundingClientRect());
-    k.style.setProperty('--fx', `${from.x - c.x}px`);
-    k.style.setProperty('--fy', `${from.y - c.y}px`);
+  // Hvert kort starter i konvoluttens åpning og flyr til plassen sin
+  const ku = kEnv.parentElement.offsetWidth / 620;
+  document.querySelectorAll('.kollasje .k:not(.k-env)').forEach((k) => {
+    k.style.setProperty('--dx', `${APNING.x * ku - (k.offsetLeft + k.offsetWidth / 2)}px`);
+    k.style.setProperty('--dy', `${APNING.y * ku - (k.offsetTop + k.offsetHeight / 2)}px`);
   });
-  cover.classList.add('is-collage');
-  env.classList.add('is-landed');
-  burst(from.x, from.y - b.height * 0.5, window.innerWidth < 560 ? 26 : 40);
-  await wait(2200);
 
-  // 4. Ferdig: siden kan blas videre
-  env.hidden = true;
-  cover.classList.add('is-done');
-  stage.removeAttribute('aria-hidden');
-  root.classList.remove('is-locked');
+  cover.classList.add('is-opening');
   root.classList.add('is-open');
+
+  const t = reduce ? 0 : 1;
+  setTimeout(() => {
+    root.classList.remove('is-locked');
+    cover.classList.add('is-gone');
+  }, 2000 * t);
 });
 
 // ---------- Inn-toning når seksjonene kommer til syne ----------
+document.querySelectorAll('.collage .reveal, .intro.reveal').forEach((el) => el.classList.remove('reveal'));
+
 const io = 'IntersectionObserver' in window
   ? new IntersectionObserver((entries) => {
       entries.forEach((e) => {
