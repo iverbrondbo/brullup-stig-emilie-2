@@ -67,16 +67,6 @@ a { color: var(--wine); }
 /* Konvolutt */
 .env { position: relative; margin-top: var(--space-5); width: min(320px, 78vw); aspect-ratio: 320 / 210; border: 0; padding: 0; background: none; cursor: pointer; border-radius: var(--radius-paper); filter: drop-shadow(0 8px 14px #2b211829); perspective: 900px; }
 .env:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
-.env__body { position: absolute; inset: 0; border-radius: var(--radius-paper); background: color-mix(in srgb, var(--envelope) 86%, #000); }
-.env__pocket { position: absolute; inset: auto 0 0 0; height: 100%; background: var(--envelope); clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); z-index: 2; border-radius: var(--radius-paper); }
-.env__flap { position: absolute; inset: 0 0 auto 0; height: 62%; background: color-mix(in srgb, var(--envelope) 92%, #000); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 3; transition: transform 800ms ease-in-out, z-index 0s 400ms; }
-.env__card { position: absolute; left: 8%; right: 8%; top: 8%; bottom: 8%; z-index: 1; background: var(--paper); border-radius: var(--radius-paper); color: var(--brown); display: grid; place-items: start center; padding-top: 10%; transition: transform 800ms ease-in-out 250ms; }
-.env__card .script { font-size: clamp(32px, 8vw, 40px); line-height: 1.1; }
-.seal { position: absolute; left: 50%; top: 62%; width: 96px; height: 96px; transform: translate(-50%, -50%); z-index: 4; filter: drop-shadow(0 3px 4px #3e0a1766); transition: opacity 300ms ease-out; }
-.env:hover .seal { transform: translate(-50%, -50%) scale(1.04); transition: transform 250ms ease-out; }
-.env.is-open .env__flap { transform: rotateX(180deg); z-index: 0; }
-.env.is-open .env__card { transform: translateY(-62%); }
-.env.is-open .seal { opacity: 0; }
 
 /* ---------- Seksjoner ---------- */
 .section { padding: var(--space-6) 0; }
@@ -191,7 +181,7 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .env__flap, .env__card, .btn, .seal { transition: none !important; }
+  .btn { transition: none !important; }
   .js .reveal { translate: none; transition: opacity 400ms ease-out; }
 }
 
@@ -217,7 +207,7 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .js .cover__hint { animation: fadeUp 800ms ease-out 2600ms both, breathe 2.6s ease-in-out 3400ms infinite; }
 .js .bouquet--tr { transform-origin: top right; animation: inTR 1600ms cubic-bezier(.2, .8, .2, 1) both, swayTR 7s ease-in-out 1600ms infinite; }
 .js .bouquet--bl { transform-origin: bottom left; animation: inBL 1600ms cubic-bezier(.2, .8, .2, 1) 200ms both, swayBL 8s ease-in-out 1800ms infinite; }
-.js .seal { animation: glow 2.4s ease-in-out 3000ms infinite; }
+.js .env .konv__segl { animation: glow 2.4s ease-in-out 3000ms infinite; }
 
 @keyframes write   { from { clip-path: inset(-20% 100% -20% 0); filter: blur(3px); } to { clip-path: inset(-20% 0 -20% 0); filter: blur(0); } }
 @keyframes fadeUp  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
@@ -247,15 +237,6 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 }
 
 /* ---------- Konvolutten åpnes ---------- */
-.env.is-open { animation: none; }
-.env.is-open .seal { animation: sealPop 600ms cubic-bezier(.3, 0, .6, 1) forwards; transition: none; }
-.env.is-open .env__flap { transition-delay: 450ms; }
-.env.is-open .env__card { transform: translateY(-78%) scale(1.06); transition: transform 900ms cubic-bezier(.2, .8, .2, 1) 1000ms; }
-@keyframes sealPop {
-  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  35%  { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
-  100% { transform: translate(-50%, 40%) scale(.4) rotate(-50deg); opacity: 0; }
-}
 .cover.is-opening .cover__hint { animation: none; opacity: 0; transition: opacity 300ms; }
 
 /* ---------- Innholdet etter åpning ---------- */
@@ -306,7 +287,6 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
   .js .cover { place-items: center; padding: 0 var(--space-3); }
   .cover__inner { padding-top: 6svh; }
   .cover__names { font-size: clamp(58px, 17vw, 76px); }
-  .env { width: min(340px, 84vw); }
   .bouquet--tr { height: 30svh; }
   .bouquet--bl { height: 24svh; }
   .section { padding: 48px 0; }
@@ -322,7 +302,7 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 
 /* ---------- Redusert bevegelse ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .js .cover__names, .js .cover__title, .js .env, .js .cover__hint, .js .bouquet--tr, .js .bouquet--bl, .js .seal,
+  .js .cover__names, .js .cover__title, .js .env, .js .cover__hint, .js .bouquet--tr, .js .bouquet--bl, .js .konv__segl,
   .is-open .collage > *, .is-open .polaroid img, .heading .heading__script, .timeline .time { animation: none !important; opacity: 1; clip-path: none; filter: none; }
   .petals, .burst { display: none; }
   .cover.is-leaving { animation: fadeOut 500ms forwards; }
@@ -345,7 +325,6 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .kollasje { --u: calc(100cqw / 620); position: relative; height: calc(850 * var(--u)); }
 .k { position: absolute; margin: 0; }
 
-.k-env     { left: calc(108 * var(--u)); top: calc(12 * var(--u));  width: calc(410 * var(--u)); z-index: 1; }
 .k-navn    { left: calc(44 * var(--u));  top: calc(300 * var(--u)); width: calc(300 * var(--u)); height: calc(225 * var(--u)); z-index: 3; rotate: -1deg; }
 .k-std     { left: calc(342 * var(--u)); top: calc(236 * var(--u)); width: calc(230 * var(--u)); height: calc(284 * var(--u)); z-index: 2; rotate: 4deg; }
 .k-blomst  { left: calc(255 * var(--u)); top: calc(575 * var(--u)); width: calc(80 * var(--u));  z-index: 2; }
@@ -396,7 +375,6 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 /* ---------- Kortene glir ut av konvolutten ---------- */
 .js .k { opacity: 0; }
 .is-open .k { animation: kUt 1000ms cubic-bezier(.2, .8, .2, 1) both; }
-.is-open .k-env      { animation-name: kInn; animation-delay: 300ms; }
 .is-open .k-navn     { animation-delay: 800ms; }
 .is-open .k-std      { animation-delay: 950ms; }
 .is-open .k-rsvp     { animation-delay: 1100ms; }
@@ -426,7 +404,6 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 
 /* Forsiden: større konvolutt og tekst tettere på navnene */
 .cover__title { margin-top: 0; font: 600 clamp(17px, 3vw, 26px)/1.2 var(--font-caps); letter-spacing: .04em; }
-.env { width: min(440px, 82vw); }
 .cover__hint { font: 600 clamp(15px, 2.4vw, 20px)/1.4 var(--font-caps); letter-spacing: .06em; }
 
 /* Nedtelling nederst i invitasjonsdelen: til høyre, med den hvite buketten nederst til venstre (som i Canva) */
@@ -441,7 +418,6 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 .nedtelling__tekst { margin-top: var(--space-3); font-size: clamp(32px, 6vw, 56px); line-height: 1.1; color: var(--ink); }
 
 @media (max-width: 560px) {
-  .env { width: min(360px, 86vw); }
 }
 
 /* =====================================================
@@ -456,81 +432,111 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
   --envelope-canva: #626552;
 }
 
-.k-env { left: calc(108 * var(--u)); top: calc(12 * var(--u)); width: calc(410 * var(--u)); z-index: 1; }
-.k-env img { position: relative; z-index: 1; width: 100%; }
-/* Den nederste delen av konvolutten fortsetter ned bak kortene */
-.k-env__lomme { position: absolute; z-index: 0; left: calc(7 * var(--u)); width: calc(334 * var(--u)); top: calc(240 * var(--u)); height: calc(120 * var(--u)); border-radius: 0 0 var(--radius-paper) var(--radius-paper); background: var(--papir) 0 0 / var(--papir-str), var(--envelope-canva); background-blend-mode: overlay; box-shadow: var(--shadow-paper); }
-/* Samme tekstur lagt over bildedelen, begrenset til konvolutten */
-.k-env::after { content: ""; position: absolute; z-index: 2; inset: 0 0 auto 0; aspect-ratio: 780 / 530; background: var(--papir) 0 0 / var(--papir-str); mix-blend-mode: overlay; -webkit-mask: url("assets/konvolutt-maske.png") 0 0 / 100% 100% no-repeat; mask: url("assets/konvolutt-maske.png") 0 0 / 100% 100% no-repeat; pointer-events: none; }
 
-/* Konvolutten på forsiden får samme papirfølelse */
-.env__body, .env__pocket, .env__flap { background-image: var(--papir); background-size: var(--papir-str); background-blend-mode: overlay; }
 
 /* Linjeikoner: 1,5 px i green-leaf, som designsystemet sier */
 .ikon { color: var(--leaf); }
 
 /* =====================================================
-   V6 – ÅPNING I ÉN SCENE
-   Konvolutten åpnes der den ligger, flyr opp på plass,
-   og kortene glir ut av den – uten å bytte side.
+   V6 – SAMMENHENGENDE ÅPNING SOM I INVITASJONSUTKASTET
+   Konvolutten åpnes, flyr opp til plassen sin i kollasjen,
+   og kortene flyr ut fra åpningen og legger seg på plass.
    ===================================================== */
 
-/* Forsiden er hele scenen; den låses opp når kortene ligger på plass */
-.js .cover { height: 100svh; min-height: 560px; }
-.js .cover.is-done { position: relative; inset: auto; z-index: auto; touch-action: auto; }
+:root { --ease: cubic-bezier(.22, .8, .24, 1); }
+html { scrollbar-gutter: stable; }
 
-/* Navn, buketter og hint toner ut når konvolutten trykkes */
+/* Siden under er synlig (men låst) mens forsiden løses opp */
+.js.is-locked.is-open main { visibility: visible; }
+.cover.is-opening { background-color: transparent; pointer-events: none; transition: background-color 500ms ease-out 650ms; }
+
+/* Buketter og tekst glir ut */
+.cover.is-opening .bouquet { animation: none; opacity: 0; transition: opacity 700ms var(--ease), transform 900ms var(--ease); }
+.cover.is-opening .bouquet--tr { transform: translate(60px, -60px) scale(.9); }
+.cover.is-opening .bouquet--bl { transform: translate(-60px, 60px) scale(.9); }
 .cover.is-opening .cover__names,
 .cover.is-opening .cover__title,
-.cover.is-opening .cover__hint,
-.cover.is-opening .bouquet { animation: fadeOut 600ms ease-out forwards !important; pointer-events: none; }
-@keyframes fadeOut { to { opacity: 0; } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.cover.is-opening .cover__hint { animation: none; opacity: 0; transform: translateY(-16px); transition: opacity 500ms ease-out, transform 700ms var(--ease); }
 
-/* Konvolutten: seglet blir sittende, klaffen viser akvarellforet */
-.env.is-open { animation: none !important; cursor: default; }
-.env.is-open .seal { animation: none !important; opacity: 1; }
-.env.is-open .env__flap { transition: none; animation: flapOpen 900ms ease-in-out 250ms forwards; }
-.env.is-open .env__card { transform: translateY(-40%); transition: transform 900ms cubic-bezier(.2, .8, .2, 1) 950ms; }
-.env.is-flying { transition: transform 1000ms cubic-bezier(.65, 0, .25, 1), opacity 600ms ease-out; }
-.env.is-landed { opacity: 0; transition: opacity 600ms ease-out; pointer-events: none; }
-@keyframes flapOpen {
-  0%    { transform: rotateX(0); z-index: 3; }
-  49.9% { z-index: 3; }
-  50%   { background-image: url("assets/konvolutt-for.jpg"); background-size: cover; background-position: center; background-blend-mode: normal; z-index: 0; }
-  100%  { transform: rotateX(180deg); background-image: url("assets/konvolutt-for.jpg"); background-size: cover; background-position: center; background-blend-mode: normal; z-index: 0; }
+
+
+/* =====================================================
+   ÉN KONVOLUTT: samme konvolutt på forsiden og i kollasjen.
+   Alle mål er relative (--w = bredden), så den ser lik ut i alle størrelser.
+   ===================================================== */
+.konv { --w: min(440px, 82vw); width: var(--w); aspect-ratio: 320 / 210; font-size: calc(var(--w) / 20); border-radius: var(--radius-paper); perspective: 60em; filter: drop-shadow(0 .4em .7em #2b211829); }
+.env.konv { position: relative; }
+@media (max-width: 560px) { .env.konv { --w: min(360px, 86vw); } }
+
+.konv__bak, .konv__lomme, .konv__klaff, .konv__klaff-ut, .konv__klaff-inn { position: absolute; }
+.konv__bak { inset: 0; border-radius: var(--radius-paper); background: var(--papir) 0 0 / 38% auto, color-mix(in srgb, var(--envelope) 86%, #000); background-blend-mode: overlay; }
+.konv__bak::after { content: ""; position: absolute; inset: 4.5% 4% 0; background: url("assets/foring.jpg") center 40% / cover; }
+.konv__lomme { inset: 0; z-index: 2; border-radius: var(--radius-paper); background: var(--papir) 0 0 / 38% auto, var(--envelope); background-blend-mode: overlay; clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%); }
+.konv__klaff { left: 0; top: 0; width: 100%; height: 62%; z-index: 3; transform-origin: 50% 0; transform-style: preserve-3d; }
+.konv__klaff-ut, .konv__klaff-inn { inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.konv__klaff-ut { clip-path: polygon(0 0, 100% 0, 50% 100%); background: var(--papir) 0 0 / 38% auto, color-mix(in srgb, var(--envelope) 92%, #000); background-blend-mode: overlay; }
+.konv__klaff-inn { transform: rotateX(180deg); clip-path: polygon(0 100%, 100% 100%, 50% 0); background: color-mix(in srgb, var(--envelope) 86%, #000); }
+.konv__klaff-inn::after { content: ""; position: absolute; inset: 11% 5.3% 0; clip-path: polygon(0 100%, 100% 100%, 50% 0); background: url("assets/foring.jpg") center 55% / cover; }
+.konv__segl { position: absolute; left: 50%; top: 62%; z-index: 4; width: 22%; height: auto; aspect-ratio: 1; transform: translate(-50%, -50%); filter: drop-shadow(0 .14em .18em #3e0a1766); }
+
+.konv.is-open .konv__klaff { transform: rotateX(180deg); z-index: 1; }
+.konv.is-open .konv__segl { transform: translate(-50%, -50%) scale(.82); }
+
+/* Forsiden: klaffen vippes opp, og konvolutten flyr til plassen sin i kollasjen */
+.env { transition: translate 1000ms var(--ease) 650ms, scale 1000ms var(--ease) 650ms, opacity 0s linear 1650ms; }
+.env .konv__klaff { transition: transform 750ms cubic-bezier(.5, 0, .3, 1), z-index 0s linear 375ms; }
+.env .konv__segl { transition: transform 250ms ease-out; }
+.env:not(.is-open):hover .konv__segl { transform: translate(-50%, -50%) scale(1.04); }
+.env.is-open { animation: none; cursor: default; }
+.env.is-open .konv__klaff { transition-delay: 200ms, 560ms; }
+.env.is-open .konv__segl { animation: none; transition: transform 500ms var(--ease) 650ms; }
+/* Idet den lander, byttes den med den identiske konvolutten i kollasjen */
+.cover.is-opening .env { opacity: 0; }
+
+.k-env.konv { --w: calc(334 * var(--u)); left: calc(115 * var(--u)); top: calc(136 * var(--u)); z-index: 1; }
+.is-open .k.k-env { animation: none; opacity: 1; transition: opacity 0s linear 1650ms; }
+.k-klynge { left: calc(378 * var(--u)); top: calc(32 * var(--u)); height: calc(184 * var(--u)); width: auto; z-index: 2; rotate: 12deg; pointer-events: none; filter: drop-shadow(0 2px 3px #2b21181f); }
+
+/* Kortene starter i konvoluttens åpning (--dx/--dy settes i main.js) */
+.is-open .k { animation: kUt 1000ms var(--ease) both; }
+.is-open .k-navn     { animation-delay: 1600ms; }
+.is-open .k-klynge   { animation-name: kUt; animation-delay: 1700ms; }
+.is-open .k-std      { animation-delay: 1750ms; }
+.is-open .k-rsvp     { animation-delay: 1880ms; }
+.is-open .k-polaroid { animation-delay: 2010ms; }
+.is-open .k-blomst   { animation-name: kUt; animation-delay: 2120ms; }
+.is-open .k-peon     { animation-name: kUt; animation-delay: 2250ms; }
+.is-open .k-disk     { animation: kUt 1000ms var(--ease) 2350ms both; }
+.is-open .k-polaroid img { animation-delay: 2400ms; }
+
+@keyframes kUt {
+  0%   { opacity: 0; translate: var(--dx, 0) var(--dy, 0); scale: .32; rotate: 0deg; }
+  35%  { opacity: 1; }
+  100% { opacity: 1; translate: 0 0; scale: 1; }
 }
 
-/* Scenen: kollasjen ligger midt på skjermen, tilpasset både høyde og bredde */
-.stage { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 1; }
-.cover.is-done .stage { pointer-events: auto; }
-.stage .kollasje-wrap { width: min(560px, 100vw, calc((100svh - 110px) * 620 / 850)); margin: 0; }
-.k-slot { position: absolute; left: calc(115 * var(--u)); top: calc(153 * var(--u)); width: calc(334 * var(--u)); height: calc(219 * var(--u)); }
-
-/* Kortene glir ut fra konvolutten (startpunktet regnes ut i main.js) */
-.cover.is-collage .k { animation: kFra 1000ms cubic-bezier(.2, .8, .2, 1) both; }
-.cover.is-collage .k-env      { animation: fadeIn 600ms ease-out both; }
-.cover.is-collage .k-navn     { animation-delay: 450ms; }
-.cover.is-collage .k-std      { animation-delay: 600ms; }
-.cover.is-collage .k-rsvp     { animation-delay: 800ms; }
-.cover.is-collage .k-polaroid { animation-delay: 950ms; }
-.cover.is-collage .k-blomst   { animation: fadeIn 700ms ease-out 1150ms both; }
-.cover.is-collage .k-peon     { animation: fadeIn 700ms ease-out 1250ms both; }
-.cover.is-collage .k-disk     { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1450ms both; }
-.cover.is-collage .k-polaroid img { animation: develop 1200ms ease-out 1400ms forwards; }
-@keyframes kFra { from { opacity: 0; translate: var(--fx, 0) var(--fy, 0); scale: .35; } to { opacity: 1; translate: 0 0; scale: 1; } }
-
-/* «Bla ned» når alt ligger på plass */
-.scroll-hint { position: absolute; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 2px; font: 600 12px/16px var(--font-caps); letter-spacing: .24em; text-transform: uppercase; color: var(--brown); text-decoration: none; opacity: 0; pointer-events: none; }
-.scroll-hint__pil { width: 10px; height: 10px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; rotate: 45deg; }
-.cover.is-done .scroll-hint { opacity: 1; pointer-events: auto; transition: opacity 600ms ease-out; animation: bob 2s ease-in-out infinite; }
-@keyframes bob { 0%, 100% { translate: -50% 0; } 50% { translate: -50% 6px; } }
-
-/* Nedtellingen står rett under scenen */
-#invitasjon { padding-top: var(--space-5); }
-
 @media (prefers-reduced-motion: reduce) {
-  .env.is-open .env__flap { animation-duration: 1ms; animation-delay: 0ms; }
-  .env.is-open .env__card, .env.is-flying, .env.is-landed { transition-duration: 1ms; transition-delay: 0ms; }
-  .cover.is-collage .k, .cover.is-collage .k-polaroid img { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .cover, .cover *, .k-env, .k-env * { transition-duration: 1ms !important; transition-delay: 0s !important; }
+  .is-open .k, .is-open .k-disk { animation: none !important; opacity: 1; }
+}
+
+/* Mobil: større kollasje og tekst som er lett å lese */
+@media (max-width: 560px) {
+  /* Kortene fyller hele bredden – den tomme kanten i utsnittet skjæres bort (#invitasjon klipper det som stikker ut) */
+  .kollasje-wrap { width: calc(100vw * 620 / 580); margin-inline: 0; margin-left: calc(50% - 50vw - 100vw * 26 / 580); }
+
+  .k-navn { padding: 0 calc(18 * var(--u)); }
+  .k-navn__hilsen { font-size: 14px; }
+  .k-navn__caps   { font-size: 11px; letter-spacing: .26em; }
+  .k-navn__tekst  { font-size: 13.5px; line-height: 1.25; }
+  .k-std { gap: calc(3 * var(--u)); padding: 0 calc(14 * var(--u)); }
+  .k-std__sted    { font-size: 17px; }
+  .k-std__by      { font-size: 12px; }
+  .k-std__dato    { font-size: 16px; }
+  .k-std__samme   { font-size: 10px; letter-spacing: .1em; }
+  .k-rsvp__word   { font-size: 19px; }
+  .k-rsvp__frist  { font-size: 12.5px; }
+  .k-rsvp__knapp  { font-size: 10.5px; }
+  .k-disk__caps   { font-size: 8.5px; letter-spacing: .12em; }
+  .k-disk__script { font-size: 22px; }
 }
