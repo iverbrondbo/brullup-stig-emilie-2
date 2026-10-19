@@ -102,6 +102,8 @@ if (gjest) {
   const hilsen = document.getElementById('hilsen');
   hilsen.textContent = `Kjære ${gjest}`;
   hilsen.hidden = false;
+  // Lagres med RSVP-svaret, så det synes i Netlify hvilken lenke som ble brukt
+  document.getElementById('invitert').value = gjest;
   // «dere» når lenken gjelder flere personer
   if (/\s(og)\s|&|,/i.test(gjest)) document.getElementById('gjest').textContent = 'dere';
 }
