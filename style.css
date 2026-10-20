@@ -567,3 +567,54 @@ html { scrollbar-gutter: stable; }
   .is-open .k.k-pil { animation: none !important; opacity: 1; }
 }
 
+/* =====================================================
+   V8 – STIGS ISSUES: TEKSTSTØRRELSER, KLOKKESLETT OG BLOMST
+   ===================================================== */
+
+/* #15 Det grønne kortet: navnene litt mindre, resten større */
+.k-navn__script { font-size: calc(46 * var(--u)); }
+.k-navn__hilsen { font-size: max(12px, calc(20 * var(--u))); }
+.k-navn__caps   { font-size: max(10px, calc(16 * var(--u))); }
+.k-navn__tekst  { font-size: max(12px, calc(19 * var(--u))); }
+
+/* #16 Telemarkstunet: mindre hus, større tekst og plass til klokkeslett */
+.k-std .ikon--hus    { width: calc(72 * var(--u)); }
+.k-std .ikon--ringer { width: calc(32 * var(--u)); margin-top: calc(6 * var(--u)); }
+.k-std__sted { font-size: calc(25 * var(--u)); }
+.k-std__by   { font-size: max(10px, calc(16 * var(--u))); }
+.k-std__dato { font-size: calc(23 * var(--u)); }
+.k-std__tid  { font: italic 400 max(10px, calc(18 * var(--u)))/1.2 var(--font-serif); color: var(--brown); }
+
+/* #17 «Kommer du?» mindre, svarfristen større */
+.k-rsvp__word  { font-size: calc(19 * var(--u)); }
+.k-rsvp__frist { font-size: max(11px, calc(21 * var(--u))); line-height: 1.25; margin-top: calc(10 * var(--u)); color: var(--brown); }
+
+/* #18 Den hvite blomsten ligger foran «Kommer du?»-kortet */
+.k-peon { z-index: 5; }
+
+/* Jevne linjeskift, så ingen ord blir stående alene */
+.k-navn__hilsen, .k-navn__tekst, .k-std__by { text-wrap: balance; }
+
+/* #4 og #10 Mobil: enda mer lesbar tekst, og pila lenger ned */
+@media (max-width: 560px) {
+  .k-navn__script { font-size: calc(46 * var(--u)); }
+  .k-navn__hilsen { font-size: 15.5px; }
+  .k-navn__caps   { font-size: 12.5px; letter-spacing: .24em; }
+  .k-navn__tekst  { font-size: 15.5px; line-height: 1.2; }
+  .k-std { gap: calc(2 * var(--u)); padding: 0 calc(10 * var(--u)); }
+  .k-std__sted    { font-size: 18.5px; }
+  .k-std__by      { font-size: 13.5px; }
+  .k-std__dato    { font-size: 17px; }
+  .k-std__tid     { font-size: 14px; }
+  .k-rsvp__word   { font-size: 15px; }
+  .k-rsvp__frist  { font-size: 15.5px; }
+
+  .kollasje-wrap { margin-bottom: calc(var(--space-5) + 40px); }
+  .k-pil { top: calc(842 * var(--u)); left: calc(278 * var(--u)); width: max(44px, calc(64 * var(--u))); height: max(44px, calc(64 * var(--u))); }
+}
+
+/* #14 Stjerne på obligatoriske felter */
+.paakrevd { margin-left: .2em; color: var(--wine); font-family: var(--font-serif); letter-spacing: 0; }
+.paakrevd-note { margin: 0 0 var(--space-4); font-style: italic; font-size: 15px; line-height: 22px; color: var(--muted); }
+
+.paakrevd-note .paakrevd { margin-left: 0; }

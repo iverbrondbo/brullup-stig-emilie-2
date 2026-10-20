@@ -6,6 +6,19 @@
 <title>Emilie &amp; Stig · 21. august 2027</title>
 <meta name="description" content="Emilie og Stig gifter seg 21. august 2027 på Telemarkstunet på Lillehammer.">
 <meta name="theme-color" content="#d1d4cd">
+
+<!-- Forhåndsvisning når lenken deles (iMessage, Messenger, Snap o.l.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Emilie &amp; Stig">
+<meta property="og:title" content="Emilie &amp; Stig gifter seg">
+<meta property="og:description" content="Du er invitert! 21. august 2027 på Telemarkstunet, Lillehammer.">
+<meta property="og:url" content="https://bryllup-stig-emilie.netlify.app/">
+<meta property="og:image" content="https://bryllup-stig-emilie.netlify.app/assets/forhandsvisning.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lukket grønn konvolutt med vokssegl og navnene Emilie &amp; Stig">
+<meta property="og:locale" content="nb_NO">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/GreatVibes-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/CormorantSC-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
@@ -107,12 +120,13 @@
         <span class="k-std__by">Kantvegen 135<br>2618 Lillehammer</span>
         <svg class="ikon ikon--ringer" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg>
         <span class="k-std__dato">21. august 2027</span>
+        <span class="k-std__tid">kl. 14.00</span>
       </div>
       <img class="k k-blomst" src="assets/blomsterklynge.png" alt="">
       <img class="k k-peon" src="assets/ny_blomst.png" alt="">
       <div class="k k-rsvp">
         <span class="k-rsvp__word" data-dere="Kommer<br>dere?">Kommer<br>du?</span>
-        <span class="k-rsvp__frist">Svar innen 1. mai 2027</span>
+        <span class="k-rsvp__frist">Svar innen<br>1. mai 2027</span>
       </div>
       <figure class="k k-polaroid">
         <img src="assets/par-illustrasjon.jpg" alt="Akvarellillustrasjon av Emilie og Stig i bryllupsantrekk">
@@ -177,7 +191,7 @@
       <article class="info reveal">
         <p class="eyebrow">Antrekk</p>
         <h3>Dresscode</h3>
-        <p>Pent og sommerlig. Seremonien er utendørs, så ta med noe varmt til kvelden.</p>
+        <p>Pent og sommerlig.</p>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Gaver</p>
@@ -202,12 +216,13 @@
 
       <form name="rsvp" method="POST" action="/takk.html" data-netlify="true" netlify-honeypot="bot-field" id="rsvp-form" novalidate>
         <input type="hidden" name="form-name" value="rsvp">
+        <p class="paakrevd-note">Felt merket med <span class="paakrevd">*</span> må fylles ut.</p>
         <input type="hidden" name="invitert" id="invitert" value="">
         <input type="hidden" name="deltakere" id="deltakere" value="">
         <p class="hidden"><label>Ikke fyll ut dette: <input name="bot-field"></label></p>
 
         <label class="field" id="felt-navn">
-          <span class="label">Navn</span>
+          <span class="label">Navn<span class="paakrevd" aria-hidden="true">*</span></span>
           <input class="input" type="text" name="navn" autocomplete="name" required placeholder="Fornavn og etternavn">
           <span class="error" hidden>Skriv inn navnet ditt.</span>
         </label>
@@ -216,7 +231,7 @@
         <p class="rsvp-navn" id="rsvp-navn" hidden></p>
 
         <fieldset class="field" id="felt-kommer">
-          <legend class="label">Kommer du?</legend>
+          <legend class="label">Kommer du?<span class="paakrevd" aria-hidden="true">*</span></legend>
           <div class="choice">
             <label class="choice__opt"><input type="radio" name="kommer" value="Ja" required><span class="btn btn--secondary">Jeg kommer</span></label>
             <label class="choice__opt"><input type="radio" name="kommer" value="Nei"><span class="btn btn--ghost">Jeg kommer ikke</span></label>
@@ -226,7 +241,7 @@
 
         <!-- Personlig lenke med flere navn: én avkrysningsboks per person -->
         <fieldset class="field" id="felt-hvem" hidden>
-          <legend class="label">Hvem kommer?</legend>
+          <legend class="label">Hvem kommer?<span class="paakrevd" aria-hidden="true">*</span></legend>
           <div class="sjekk" id="hvem-liste"></div>
           <label class="sjekk__opt sjekk__opt--nei"><input type="checkbox" id="ingen-kommer"><span>Vi kan dessverre ikke komme</span></label>
           <span class="error" hidden>Kryss av for hvem som kommer, eller at dere ikke kan komme.</span>
@@ -241,14 +256,10 @@
             <span class="hint">Deg selv medregnet.</span>
           </label>
 
-          <label class="field">
-            <span class="label">Navn på følge</span>
-            <input class="input" type="text" name="folge" placeholder="Hvis du har med noen" data-dere-ph="Hvis dere har med noen">
-          </label>
 
           <label class="field">
-            <span class="label">Allergier</span>
-            <input class="input" type="text" name="allergier" placeholder="Matallergier eller spesielle hensyn">
+            <span class="label">Allergier/matpreferanser</span>
+            <input class="input" type="text" name="allergier" placeholder="F.eks. nøtteallergi eller vegetar">
           </label>
 
           <label class="field">
