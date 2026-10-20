@@ -331,7 +331,6 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .k-rsvp    { left: calc(88 * var(--u));  top: calc(545 * var(--u)); width: calc(176 * var(--u)); height: calc(192 * var(--u)); z-index: 3; rotate: -3deg; }
 .k-polaroid{ left: calc(330 * var(--u)); top: calc(552 * var(--u)); width: calc(215 * var(--u)); z-index: 4; rotate: -1deg; }
 .k-peon    { left: calc(22 * var(--u)); top: calc(500 * var(--u)); width: calc(118 * var(--u)); z-index: 3; rotate: -8deg; filter: drop-shadow(0 2px 3px #2b21181f); pointer-events: none; }
-.k-disk    { left: calc(260 * var(--u)); top: calc(722 * var(--u)); width: calc(100 * var(--u)); height: calc(100 * var(--u)); z-index: 6; }
 
 /* Papirkort */
 .k-navn, .k-std, .k-rsvp { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); text-decoration: none; }
@@ -362,14 +361,10 @@ select.input { appearance: none; background-image: linear-gradient(45deg, transp
 .k-polaroid { box-sizing: border-box; padding: calc(10 * var(--u)) calc(10 * var(--u)) calc(34 * var(--u)); background: var(--raised); border-radius: var(--radius-paper); box-shadow: var(--shadow-paper); }
 .k-polaroid img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
 
-.k-disk { display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: var(--calla); color: var(--on-dark); text-decoration: none; box-shadow: var(--shadow-paper); }
-.k-disk__caps { font: 600 max(8px, calc(11 * var(--u)))/1.2 var(--font-caps); letter-spacing: .18em; text-transform: uppercase; }
-.k-disk__script { font: 400 calc(28 * var(--u))/1.1 var(--font-script); }
 
 /* Klikkbare kort løftes litt */
 a.k { transition: transform 250ms ease-out, box-shadow 250ms ease-out, background-color 250ms ease-out; }
 a.k:hover { transform: translateY(-4px); box-shadow: var(--shadow-lifted); }
-.k-disk:hover { background: var(--wine); }
 a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
 
 /* ---------- Kortene glir ut av konvolutten ---------- */
@@ -381,7 +376,6 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 .is-open .k-polaroid { animation-delay: 1250ms; }
 .is-open .k-blomst   { animation-name: kInn; animation-delay: 1450ms; }
 .is-open .k-peon     { animation-name: kInn; animation-delay: 1550ms; }
-.is-open .k-disk     { animation: popp 700ms cubic-bezier(.3, 1.6, .5, 1) 1900ms both; }
 .js .k-polaroid img { filter: sepia(1) brightness(1.7) blur(6px); }
 .is-open .k-polaroid img { animation: develop 1200ms ease-out 1700ms forwards; }
 
@@ -390,7 +384,7 @@ a.k:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring
 @keyframes popp   { from { opacity: 0; scale: 0; } to { opacity: 1; scale: 1; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-open .k, .is-open .k-disk, .is-open .k-polaroid img { animation: none !important; opacity: 1; filter: none; }
+  .is-open .k, .is-open .k-polaroid img { animation: none !important; opacity: 1; filter: none; }
 }
 
 /* Kollasjen bruker hele skjermbredden på mobil */
@@ -506,7 +500,6 @@ html { scrollbar-gutter: stable; }
 .is-open .k-polaroid { animation-delay: 2010ms; }
 .is-open .k-blomst   { animation-name: kUt; animation-delay: 2120ms; }
 .is-open .k-peon     { animation-name: kUt; animation-delay: 2250ms; }
-.is-open .k-disk     { animation: kUt 1000ms var(--ease) 2350ms both; }
 .is-open .k-polaroid img { animation-delay: 2400ms; }
 
 @keyframes kUt {
@@ -517,7 +510,7 @@ html { scrollbar-gutter: stable; }
 
 @media (prefers-reduced-motion: reduce) {
   .cover, .cover *, .k-env, .k-env * { transition-duration: 1ms !important; transition-delay: 0s !important; }
-  .is-open .k, .is-open .k-disk { animation: none !important; opacity: 1; }
+  .is-open .k { animation: none !important; opacity: 1; }
 }
 
 /* Mobil: større kollasje og tekst som er lett å lese */
@@ -537,6 +530,40 @@ html { scrollbar-gutter: stable; }
   .k-rsvp__word   { font-size: 19px; }
   .k-rsvp__frist  { font-size: 12.5px; }
   .k-rsvp__knapp  { font-size: 10.5px; }
-  .k-disk__caps   { font-size: 8.5px; letter-spacing: .12em; }
-  .k-disk__script { font-size: 22px; }
 }
+
+/* =====================================================
+   V7 – PIL I STEDET FOR «TRYKK FOR DETALJER»,
+   SKJEMA MED NAVN FRA LENKEN
+   ===================================================== */
+
+[hidden] { display: none !important; }
+
+/* Pil nederst i kollasjen som viser at siden fortsetter */
+.k-pil { left: calc(282 * var(--u)); top: calc(778 * var(--u)); width: calc(56 * var(--u)); height: calc(56 * var(--u)); z-index: 6; display: grid; place-items: center; border-radius: 50%; background: var(--calla); color: var(--on-dark); box-shadow: var(--shadow-paper); text-decoration: none; }
+.k-pil__tegn { width: calc(14 * var(--u)); height: calc(14 * var(--u)); min-width: 9px; min-height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; rotate: 45deg; translate: 0 -20%; }
+.k-pil:focus-visible { outline: 2px solid transparent; box-shadow: var(--focus-ring); }
+.is-open .k.k-pil { animation: pilInn 700ms var(--ease) 2600ms both, pilVipp 2s ease-in-out 3300ms infinite; }
+@keyframes pilInn { from { opacity: 0; translate: 0 -12px; } to { opacity: 1; translate: 0 0; } }
+@keyframes pilVipp { 0%, 100% { translate: 0 0; } 50% { translate: 0 6px; } }
+
+/* Ett navn fra lenken: navnet står over svarknappene */
+.rsvp-navn { margin: 0 0 var(--space-4); font: 400 clamp(30px, 6vw, 38px)/1.2 var(--font-script); color: var(--ink); text-align: center; }
+
+/* Flere navn fra lenken: avkrysningsbokser nedover */
+.sjekk { display: flex; flex-direction: column; gap: var(--space-2); }
+.sjekk__opt { display: flex; align-items: center; gap: 14px; min-height: 52px; padding: 10px 16px; border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--raised); color: var(--ink); font-size: 19px; line-height: 27px; cursor: pointer; transition: border-color 150ms ease-out, background-color 150ms ease-out; }
+.sjekk__opt input { appearance: none; flex: none; width: 24px; height: 24px; margin: 0; border: 1.5px solid var(--muted); border-radius: 4px; background: var(--paper); display: grid; place-items: center; cursor: pointer; }
+.sjekk__opt input::after { content: ""; width: 7px; height: 13px; border-right: 2.5px solid var(--on-dark); border-bottom: 2.5px solid var(--on-dark); rotate: 45deg; translate: 0 -2px; opacity: 0; }
+.sjekk__opt input:checked { background: var(--forest); border-color: var(--forest); }
+.sjekk__opt input:checked::after { opacity: 1; }
+.sjekk__opt input:focus-visible { box-shadow: var(--focus-ring); }
+.sjekk__opt:has(input:checked) { border-color: var(--forest); }
+.sjekk__opt--nei { margin-top: var(--space-3); font-style: italic; color: var(--muted); }
+.sjekk__opt--nei:has(input:checked) { border-color: var(--wine); color: var(--wine); }
+.sjekk__opt--nei input:checked { background: var(--wine); border-color: var(--wine); }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-open .k.k-pil { animation: none !important; opacity: 1; }
+}
+

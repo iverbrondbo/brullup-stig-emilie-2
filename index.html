@@ -101,28 +101,23 @@
         <p class="k-navn__caps">gifter seg</p>
         <p class="k-navn__tekst">og vil gjerne feire dagen med <span id="gjest">deg</span></p>
       </div>
-      <a class="k k-std" href="#info">
+      <div class="k k-std">
         <svg class="ikon ikon--hus" viewBox="0 0 120 64" aria-hidden="true"><use href="#ikon-hus"/></svg>
         <span class="k-std__sted">Telemarkstunet</span>
         <span class="k-std__by">Kantvegen 135<br>2618 Lillehammer</span>
         <svg class="ikon ikon--ringer" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg>
         <span class="k-std__dato">21. august 2027</span>
-        <span class="k-std__samme">Vielse og fest<br>samme sted</span>
-      </a>
+      </div>
       <img class="k k-blomst" src="assets/blomsterklynge.png" alt="">
-      <img class="k k-peon" src="assets/peon-hvit.png" alt="">
-      <a class="k k-rsvp" href="#rsvp">
-        <span class="k-rsvp__word">Kommer<br>du?</span>
+      <img class="k k-peon" src="assets/ny_blomst.png" alt="">
+      <div class="k k-rsvp">
+        <span class="k-rsvp__word" data-dere="Kommer<br>dere?">Kommer<br>du?</span>
         <span class="k-rsvp__frist">Svar innen 1. mai 2027</span>
-        <span class="k-rsvp__knapp">Trykk her</span>
-      </a>
+      </div>
       <figure class="k k-polaroid">
         <img src="assets/par-illustrasjon.jpg" alt="Akvarellillustrasjon av Emilie og Stig i bryllupsantrekk">
       </figure>
-      <a class="k k-disk" href="#info">
-        <span class="k-disk__caps">Trykk for</span>
-        <span class="k-disk__script">Detaljer</span>
-      </a>
+      <a class="k k-pil" href="#program" aria-label="Bla ned"><span class="k-pil__tegn" aria-hidden="true"></span></a>
     </div>
   </div>
 
@@ -146,7 +141,7 @@
     <p class="note reveal">Foreløpig program – tidene kan endre seg.</p>
 
     <ol class="timeline">
-      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg><div><h3>Vielse</h3><p><span class="time">kl. 14.00</span> Seremoni på Telemarkstunet. Hele dagen, også festen, er på samme sted.</p></div></li>
+      <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 44" aria-hidden="true"><use href="#ikon-ringer"/></svg><div><h3>Vielse</h3><p><span class="time">kl. 14.00</span> Seremoni på Telemarkstunet.</p></div></li>
       <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 60 64" aria-hidden="true"><use href="#ikon-glass"/></svg><div><h3>Bobler og bilder</h3><p><span class="time">kl. 15.00</span> Skål med brudeparet og fotografering.</p></div></li>
       <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 72 48" aria-hidden="true"><use href="#ikon-middag"/></svg><div><h3>Middag</h3><p><span class="time">kl. 17.30</span> Middag, taler og god stemning.</p></div></li>
       <li class="reveal"><svg class="ikon timeline__ikon" viewBox="0 0 64 48" aria-hidden="true"><use href="#ikon-kake"/></svg><div><h3>Kake og første dans</h3><p><span class="time">kl. 21.00</span> Deretter er dansegulvet åpent.</p></div></li>
@@ -166,13 +161,13 @@
       <article class="info reveal">
         <p class="eyebrow">Sted</p>
         <h3>Telemarkstunet</h3>
-        <p>Kantvegen 135, 2618 Lillehammer. Både vielsen og festen er her, så du trenger ikke flytte deg i løpet av dagen. Informasjon om parkering kommer.</p>
+        <p>Kantvegen 135, 2618 Lillehammer. Både vielsen og festen er her, så <span data-dere="dere">du</span> trenger ikke flytte <span data-dere="dere">deg</span> i løpet av dagen. Informasjon om parkering kommer.</p>
         <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&amp;query=Telemarkstunet%2C+Kantvegen+135%2C+2618+Lillehammer" target="_blank" rel="noopener">Åpne kart</a>
       </article>
       <article class="info reveal">
-        <p class="eyebrow">Reise</p>
-        <h3>Til Lillehammer</h3>
-        <p>Toget fra Oslo S og Gardermoen går rett til Lillehammer. Vi kommer tilbake med informasjon om transport til Telemarkstunet.</p>
+        <p class="eyebrow">Servering</p>
+        <h3>Mat og drikke</h3>
+        <p>Vi stiller med drikke.</p>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Overnatting</p>
@@ -182,12 +177,12 @@
       <article class="info reveal">
         <p class="eyebrow">Antrekk</p>
         <h3>Dresscode</h3>
-        <p>Kommer. Seremonien er utendørs, så ta med noe varmt til kvelden.</p>
+        <p>Pent og sommerlig. Seremonien er utendørs, så ta med noe varmt til kvelden.</p>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Gaver</p>
         <h3>Gaveønsker</h3>
-        <p>Det viktigste er at du kommer. Ønskeliste kommer.</p>
+        <p>Det viktigste er at <span data-dere="dere">du</span> kommer. Ønskeliste kommer.</p>
       </article>
       <article class="info reveal">
         <p class="eyebrow">Spørsmål</p>
@@ -202,31 +197,43 @@
 <section class="section section--sage" id="rsvp">
   <div class="wrap narrow">
     <div class="rsvp reveal">
-      <h2 class="heading heading--card"><span class="script heading__script">Kommer du?</span><span class="heading__caps">Gi oss beskjed</span></h2>
+      <h2 class="heading heading--card"><span class="script heading__script" data-dere="Kommer dere?">Kommer du?</span><span class="heading__caps">Gi oss beskjed</span></h2>
       <p class="note">Svar innen 1. mai 2027</p>
 
       <form name="rsvp" method="POST" action="/takk.html" data-netlify="true" netlify-honeypot="bot-field" id="rsvp-form" novalidate>
         <input type="hidden" name="form-name" value="rsvp">
         <input type="hidden" name="invitert" id="invitert" value="">
+        <input type="hidden" name="deltakere" id="deltakere" value="">
         <p class="hidden"><label>Ikke fyll ut dette: <input name="bot-field"></label></p>
 
-        <label class="field">
+        <label class="field" id="felt-navn">
           <span class="label">Navn</span>
           <input class="input" type="text" name="navn" autocomplete="name" required placeholder="Fornavn og etternavn">
           <span class="error" hidden>Skriv inn navnet ditt.</span>
         </label>
 
-        <fieldset class="field">
+        <!-- Personlig lenke med ett navn: navnet står her i stedet for navnefeltet -->
+        <p class="rsvp-navn" id="rsvp-navn" hidden></p>
+
+        <fieldset class="field" id="felt-kommer">
           <legend class="label">Kommer du?</legend>
           <div class="choice">
-            <label class="choice__opt"><input type="radio" name="kommer" value="Ja" required><span class="btn btn--secondary">Ja, jeg kommer</span></label>
-            <label class="choice__opt"><input type="radio" name="kommer" value="Nei"><span class="btn btn--ghost">Beklager, jeg kan ikke</span></label>
+            <label class="choice__opt"><input type="radio" name="kommer" value="Ja" required><span class="btn btn--secondary">Jeg kommer</span></label>
+            <label class="choice__opt"><input type="radio" name="kommer" value="Nei"><span class="btn btn--ghost">Jeg kommer ikke</span></label>
           </div>
           <span class="error" hidden>Velg ett av svarene.</span>
         </fieldset>
 
+        <!-- Personlig lenke med flere navn: én avkrysningsboks per person -->
+        <fieldset class="field" id="felt-hvem" hidden>
+          <legend class="label">Hvem kommer?</legend>
+          <div class="sjekk" id="hvem-liste"></div>
+          <label class="sjekk__opt sjekk__opt--nei"><input type="checkbox" id="ingen-kommer"><span>Vi kan dessverre ikke komme</span></label>
+          <span class="error" hidden>Kryss av for hvem som kommer, eller at dere ikke kan komme.</span>
+        </fieldset>
+
         <div class="if-yes" id="if-yes">
-          <label class="field">
+          <label class="field" id="felt-antall">
             <span class="label">Antall gjester</span>
             <select class="input" name="antall">
               <option>1</option><option>2</option><option>3</option><option>4</option>
@@ -236,7 +243,7 @@
 
           <label class="field">
             <span class="label">Navn på følge</span>
-            <input class="input" type="text" name="folge" placeholder="Hvis du har med noen">
+            <input class="input" type="text" name="folge" placeholder="Hvis du har med noen" data-dere-ph="Hvis dere har med noen">
           </label>
 
           <label class="field">
@@ -246,7 +253,7 @@
 
           <label class="field">
             <span class="label">Sangønske</span>
-            <input class="input" type="text" name="sang" placeholder="Hva får deg ut på dansegulvet?">
+            <input class="input" type="text" name="sang" placeholder="Hva får deg ut på dansegulvet?" data-dere-ph="Hva får dere ut på dansegulvet?">
           </label>
         </div>
 
@@ -257,7 +264,7 @@
 
         <label class="field">
           <span class="label">Annet</span>
-          <textarea class="input" name="annet" rows="3" placeholder="Valgfritt – noe annet du vil si fra om?"></textarea>
+          <textarea class="input" name="annet" rows="3" placeholder="Valgfritt – noe annet du vil si fra om?" data-dere-ph="Valgfritt – noe annet dere vil si fra om?"></textarea>
         </label>
 
         <button class="btn btn--primary btn--block" type="submit">Svar på invitasjon</button>
